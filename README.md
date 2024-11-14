@@ -1,6 +1,6 @@
 # Argo CD Configuration
 
-[Argo CD](https://argo-cd.readthedocs.io/en/stable/) is a declarative, GitOps continuous delivery tool for Kubernetes. This repository contains the configuration for Argo, as [apps of apps](https://argo-cd.readthedocs.io/en/latest/operator-manual/cluster-bootstrapping/), so that we can bootstrap the Argo CD installation to manage itself.
+[Argo CD](https://argo-cd.readthedocs.io/en/stable/) is a declarative, GitOps continuous delivery tool for Kubernetes. This repository contains the configuration for Argo, as [apps of apps](https://argo-cd.readthedocs.io/en/stable/operator-manual/cluster-bootstrapping/), so that we can bootstrap the Argo CD installation to manage itself.
 
 ## Usage
 
