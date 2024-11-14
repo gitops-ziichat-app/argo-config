@@ -9,7 +9,10 @@ spec:
   sources:
     - repoURL: https://github.com/gitops-ci-cd/argo-config.git
       targetRevision: HEAD
-      path: config/base
+      path: config/config-map.yml
+    - repoURL: https://github.com/gitops-ci-cd/argo-config.git
+      targetRevision: HEAD
+      path: config/app-projects
     - repoURL: https://github.com/gitops-ci-cd/argo-config.git
       targetRevision: HEAD
       path: config/repositories
