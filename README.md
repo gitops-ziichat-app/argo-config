@@ -17,6 +17,7 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 
 # Instruct ArgoCD to manage itself via GitOps
 kubectl apply -f ./config/application.yaml
+
 # Give ArgoCD an App of apps to manage via GitOps
 kubectl apply -f ./app-of-apps/application.yaml
 
