@@ -1,0 +1,26 @@
+# https://github.com/argoproj-labs/argocd-extension-installer
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-server
+spec:
+  template:
+    spec:
+      initContainers:
+        - name: extension-
+          image: quay.io/argoprojlabs/argocd-extension-installer:v0.0.5@sha256:27e72f047298188e2de1a73a1901013c274c4760c92f82e6e46cd5fbd0957c6b
+          env:
+          - name: EXTENSION_URL
+            value: https://github.com/some-org/somerepo/releases/download/v0.0.1/extension.tar
+          volumeMounts:
+            - name: extensions
+              mountPath: /tmp/extensions/
+          securityContext:
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
+      containers:
+        - name: argocd-server
+          volumeMounts:
+            - name: extensions
+              mountPath: /tmp/extensions/
