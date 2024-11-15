@@ -11,7 +11,7 @@ spec:
     - git:
         repoURL: https://github.com/gitops-ci-cd/argo-config.git
         revision: HEAD
-        directories:
+        files:
           - path: app-of-apps/clusters/*
   template:
     metadata:
