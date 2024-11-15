@@ -11,9 +11,8 @@
 <https://argo-cd.readthedocs.io/en/stable/getting_started/#1-install-argo-cd>
 
 ```sh
-# Create the namespace and install ArgoCD
-kubectl create namespace argocd
-kubectl apply -k config/overlay
+# Install ArgoCD
+kubectl apply -k argo/overlay
 
 # Instruct ArgoCD to manage itself via GitOps
 kubectl apply -f ./config/application.yaml
@@ -25,7 +24,7 @@ kubectl apply -f ./app-of-apps/application.yaml
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 ```
 
-<https://localhost:8080> will provide the Argo CD UI.
+<https://localhost> will provide the Argo CD UI.
 
 ### Configuration
 
