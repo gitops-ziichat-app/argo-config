@@ -1,10 +1,13 @@
-devTargetRevision: &devTag HEAD
-prodTargetRevision: &prodTag "v1.2.3"
+# devTargetRevision: &devTag HEAD
+# prodTargetRevision: &prodTag v0.1.0
 
 clusters:
-  - name: local
-    targetRevision: *devTag
+  - name: in-cluster
+    targetRevision: HEAD
     env: sandbox
-  - name: cicd-apps-usw2-prd
-    targetRevision: *prodTag
-    env: production
+  # - name: cicd-apps-usw2-prd
+  #   targetRevision: v0.1.0
+  #   env: production
+
+kubernetes-dashboard:
+  targetRevision: 7.10.0

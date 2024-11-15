@@ -11,11 +11,11 @@ spec:
         revision: HEAD
         files:
           - path: app-of-apps/clusters.yaml
-    - git:
-        repoURL: https://github.com/gitops-ci-cd/addons
-        revision: '{{clusters.targetRevision}}'
-        files:
-          - path: kubernetes-dashboard/addon.yaml
+    # - git:
+    #     repoURL: https://github.com/gitops-ci-cd/addons
+    #     revision: HEAD
+    #     files:
+    #       - path: kubernetes-dashboard/addon.yaml
   template:
     metadata:
       name: 'kubernetes-dashboard-{{clusters.name}}'
