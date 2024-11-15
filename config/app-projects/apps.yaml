@@ -5,7 +5,7 @@ metadata:
   name: apps
   namespace: argocd
 spec:
-  description: Manages user space applications
+  description: The user space applications
   sourceRepos:
     - '*'
   destinations:

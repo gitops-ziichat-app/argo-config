@@ -6,10 +6,13 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: https://github.com/gitops-ci-cd/argo-config.git
-    targetRevision: HEAD
-    path: app-of-apps/apps
+  sources:
+    - repoURL: https://github.com/gitops-ci-cd/argo-config.git
+      targetRevision: HEAD
+      path: app-of-apps/addons
+    - repoURL: https://github.com/gitops-ci-cd/argo-config.git
+      targetRevision: HEAD
+      path: app-of-apps/apps
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd

@@ -2,10 +2,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: infra
+  name: addons
   namespace: argocd
 spec:
-  description: Manages system level applications
+  description: The services and configurations that enhance Kubernetes' capabilities
   sourceRepos:
     - '*'
   destinations:

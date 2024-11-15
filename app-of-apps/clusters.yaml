@@ -1,0 +1,10 @@
+devTargetRevision: &devTag HEAD
+prodTargetRevision: &prodTag "v1.2.3"
+
+clusters:
+  - name: local
+    targetRevision: *devTag
+    env: sandbox
+  - name: cicd-apps-usw2-prd
+    targetRevision: *prodTag
+    env: production

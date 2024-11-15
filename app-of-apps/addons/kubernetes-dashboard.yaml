@@ -1,0 +1,47 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kubernetes-dashboard
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/gitops-ci-cd/argo-config
+        revision: HEAD
+        files:
+          - path: app-of-apps/clusters.yaml
+    - git:
+        repoURL: https://github.com/gitops-ci-cd/addons
+        revision: '{{clusters.targetRevision}}'
+        files:
+          - path: kubernetes-dashboard/addon.yaml
+  template:
+    metadata:
+      name: 'kubernetes-dashboard-{{clusters.name}}'
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: addons
+      sources:
+        - chart: kubernetes-dashboard
+          targetRevision: '{{kubernetes-dashboard.targetRevision}}'
+          repoURL: https://kubernetes.github.io/dashboard/
+          helm:
+            valueFiles:
+              - '$values/kubernetes-dashboard/values.yaml'
+        - repoURL: https://github.com/gitops-ci-cd/addons
+          targetRevision: '{{clusters.targetRevision}}'
+          ref: values
+      destination:
+        name: '{{clusters.name}}'
+        namespace: kubernetes-dashboard
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        managedNamespaceMetadata:
+          labels:
+          annotations:
+        syncOptions:
+          - CreateNamespace=true
