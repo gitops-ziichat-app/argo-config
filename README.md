@@ -13,7 +13,7 @@
 ```sh
 # Create the namespace and install ArgoCD
 kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl apply -k config/overlay
 
 # Instruct ArgoCD to manage itself via GitOps
 kubectl apply -f ./config/application.yaml

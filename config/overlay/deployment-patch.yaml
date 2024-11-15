@@ -1,9 +1,10 @@
 # https://github.com/argoproj-labs/argocd-extension-installer
-
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: argocd-server
+  namespace: argocd
 spec:
   template:
     spec:
