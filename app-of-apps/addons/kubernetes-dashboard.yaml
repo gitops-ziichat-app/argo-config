@@ -7,7 +7,7 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL: https://github.com/gitops-ci-cd/argo-config
+        repoURL: https://github.com/gitops-ci-cd/argo-config.git
         revision: HEAD
         directories:
           - path: app-of-apps/clusters
@@ -25,7 +25,7 @@ spec:
           helm:
             valueFiles:
               - '$values/kubernetes-dashboard/values.yaml'
-        - repoURL: https://github.com/gitops-ci-cd/addons
+        - repoURL: https://github.com/gitops-ci-cd/addons.git
           targetRevision: '{{targetRevision}}'
           ref: values
       destination:
