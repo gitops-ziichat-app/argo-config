@@ -9,32 +9,27 @@ spec:
     - git:
         repoURL: https://github.com/gitops-ci-cd/argo-config
         revision: HEAD
-        files:
-          - path: app-of-apps/clusters.yaml
-    # - git:
-    #     repoURL: https://github.com/gitops-ci-cd/addons
-    #     revision: HEAD
-    #     files:
-    #       - path: kubernetes-dashboard/addon.yaml
+        directories:
+          - path: app-of-apps/clusters
   template:
     metadata:
-      name: 'kubernetes-dashboard-{{clusters.name}}'
+      name: 'kubernetes-dashboard-{{name}}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
       project: addons
       sources:
         - chart: kubernetes-dashboard
-          targetRevision: '{{kubernetes-dashboard.targetRevision}}'
+          targetRevision: 7.10.0
           repoURL: https://kubernetes.github.io/dashboard/
           helm:
             valueFiles:
               - '$values/kubernetes-dashboard/values.yaml'
         - repoURL: https://github.com/gitops-ci-cd/addons
-          targetRevision: '{{clusters.targetRevision}}'
+          targetRevision: '{{targetRevision}}'
           ref: values
       destination:
-        name: '{{clusters.name}}'
+        name: '{{name}}'
         namespace: kubernetes-dashboard
       syncPolicy:
         automated:
