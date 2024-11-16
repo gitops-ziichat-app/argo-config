@@ -25,7 +25,7 @@ spec:
                 - pullRequest:
                     github:
                       owner: gitops-ci-cd
-                      repo: '{{ strings.TrimSuffix .repository "-deployment" }}'
+                      repo: '{{ regexReplaceAll "-deployment$" .repository "" }}'
                       tokenRef:
                         secretName: github-token
                         key: token
@@ -38,7 +38,7 @@ spec:
                   kubernetes.io/environment: sandbox
   template:
     metadata:
-      name: '{{ strings.TrimSuffix .repository "-deployment" }}-{{ .name }}-PR{{ .number }}'
+      name: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .name }}-PR{{ .number }}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
@@ -49,10 +49,10 @@ spec:
         path: 'overlays/ephemeral'
       destination:
         name: '{{ .name }}'
-        namespace: '{{ strings.TrimSuffix .repository "-deployment" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
+        namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
       info:
         - name: 'Pull Request'
-          value: 'https://github.com/{{ .organization }}/{{ strings.TrimSuffix .repository "-deployment" }}/pull/{{ .number }}'
+          value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}/pull/{{ .number }}'
         - name: 'Deployment Manifests'
           value: 'https://github.com/{{ .organization }}/{{ .repository }}/overlays/ephemeral'
       syncPolicy:

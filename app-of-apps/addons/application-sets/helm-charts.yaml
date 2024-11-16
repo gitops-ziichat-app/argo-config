@@ -34,7 +34,7 @@ spec:
 
   template:
     metadata:
-      name: '{{ strings.TrimSuffix .repository "-addon" }}-{{ .name }}'
+      name: '{{ regexReplaceAll "-addon$" .repository "" }}-{{ .name }}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:

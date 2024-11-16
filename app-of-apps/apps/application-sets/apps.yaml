@@ -33,7 +33,7 @@ spec:
                   kubernetes.io/environment: '{{ .path.basename }}'
   template:
     metadata:
-      name: '{{ strings.TrimSuffix .repository "-deployment" }}-{{ .name }}'
+      name: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .name }}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
@@ -44,10 +44,10 @@ spec:
         path: 'overlays/{{ index .metadata.labels "kubernetes.io/environment" }}'
       destination:
         name: '{{ .name }}'
-        namespace: '{{ strings.TrimSuffix .repository "-deployment" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
+        namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
       info:
         - name: 'Application Repository'
-          value: 'https://github.com/{{ .organization }}/{{ strings.TrimSuffix .repository "-deployment" }}'
+          value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}'
         - name: 'Deployment Manifests'
           value: 'https://github.com/{{ .organization }}/{{ .repository }}/overlays/{{ index .metadata.labels "kubernetes.io/environment" }}'
       syncPolicy:
