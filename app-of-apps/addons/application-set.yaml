@@ -23,7 +23,7 @@ spec:
                         # pathsExist:
                         #   - '*/chart.yaml'
                 - git:
-                    repoURL: '{{ .url }}'
+                    repoURL: '{{ .url }}.git'
                     revision: HEAD
                     files:
                       - path: '**/chart.yaml'
