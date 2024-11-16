@@ -19,7 +19,7 @@ spec:
                         secretName: github-token
                         key: token
                     filters:
-                      - repositoryMatch: '.+-addon$'
+                      - repositoryMatch: '-addon'
                         pathsExist:
                           - chart.yaml
                 - git:
