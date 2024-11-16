@@ -18,7 +18,7 @@ spec:
                     filters:
                       - repositoryMatch: -addon$
                         pathsExist:
-                          - base/values.yaml
+                          - chart.yaml
                 - git:
                   repoURL: '{{ .url }}'
                   revision: HEAD
@@ -28,32 +28,6 @@ spec:
               selector:
                 matchLabels:
                   kubernetes.io/environment: '{{.path.basename}}'
-
-    # ---
-
-    # - path: /examples/git-generator-directory/cluster-addons/argo-workflows
-    #   path.basename: argo-workflows
-
-    # - path: /examples/git-generator-directory/cluster-addons/prometheus-operator
-    #   path.basename: prometheus-operator
-
-    # ---
-
-    # - chart: foo
-    #   targetRevision: 1
-    #   repoURL: https://example.com/foo
-
-    # - chart: bar
-    #   targetRevision: 2
-    #   repoURL: https://example.com/bar
-
-    # ---
-
-    # - name: sandbox
-    #   server: https://1.2.3.4
-
-    # - name: production
-    #   server: https://2.4.6.8
 
   template:
     metadata:
