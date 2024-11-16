@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons
+  name: apps
   namespace: argocd
 spec:
   goTemplate: true
@@ -19,39 +19,32 @@ spec:
                         secretName: github-token
                         key: token
                     filters:
-                      - repositoryMatch: '.+-addon$'
-                        # pathsExist:
-                        #   - '**/chart.yaml'
+                      - repositoryMatch: '.+-deployment$'
+                        pathsExist:
+                          - base/kustomization.yaml
                 - git:
                     repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}.git'
                     revision: HEAD
                     files:
-                      - path: '**/chart.yaml'
+                      - path: 'overlays/**/kustomization.yaml'
           - clusters:
               selector:
                 matchLabels:
                   kubernetes.io/environment: '{{ .path.basename }}'
-
   template:
     metadata:
       name: '{{ .repository }}-{{ .name }}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
-      project: addons
-      sources:
-        - chart: '{{ .chart }}'
-          targetRevision: '{{ .targetRevision }}'
-          repoURL: '{{ .repoURL }}'
-          helm:
-            valueFiles:
-              - '$values/{{ index .metadata.labels "kubernetes.io/environment" }}/values.yaml'
-        - repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}'
-          targetRevision: HEAD
-          ref: values
+      project: apps
+      source:
+        repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}'
+        targetRevision: HEAD
+        path: 'overlays/{{ index .metadata.labels "kubernetes.io/environment" }}'
       destination:
         name: '{{ .name }}'
-        namespace: '{{ .namespace }}'
+        namespace: '{{ .repository }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
       syncPolicy:
         automated:
           prune: true
