@@ -23,7 +23,8 @@ spec:
                         # pathsExist:
                         #   - '*/chart.yaml'
                 - git:
-                    repoURL: '{{ .url }}.git'
+                    # repoURL: '{{ .url }}.git'
+                    repoURL: https://https://github.com/gitops-ci-cd/kubernetes-dashboard-addon.git
                     revision: HEAD
                     files:
                       - path: '**/chart.yaml'
