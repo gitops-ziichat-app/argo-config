@@ -15,6 +15,9 @@ spec:
                 - scmProvider:
                     github:
                       organization: gitops-ci-cd
+                      tokenRef:
+                        secretName: github-token
+                        key: token
                     filters:
                       - repositoryMatch: -addon$
                         pathsExist:
