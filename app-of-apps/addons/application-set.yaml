@@ -47,7 +47,7 @@ spec:
           helm:
             valueFiles:
               - '$values/{{ index .metadata.labels "kubernetes.io/environment" }}/values.yaml'
-        - repoURL: '{{ .url }}'
+        - repoURL: https://github.com/gitops-ci-cd/kubernetes-dashboard-addon
           targetRevision: HEAD
           ref: values
       destination:
