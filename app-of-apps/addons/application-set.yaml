@@ -20,8 +20,8 @@ spec:
                         key: token
                     filters:
                       - repositoryMatch: '.+-addon$'
-                        pathsExist:
-                          - '*/chart.yaml'
+                        # pathsExist:
+                        #   - '*/chart.yaml'
                 - git:
                   repoURL: '{{ .url }}'
                   revision: HEAD
