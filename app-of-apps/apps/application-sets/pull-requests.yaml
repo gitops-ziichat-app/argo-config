@@ -53,8 +53,8 @@ spec:
       info:
         - name: 'Pull Request'
           value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}/pull/{{ .number }}'
-        - name: 'Deployment Manifests'
-          value: 'https://github.com/{{ .organization }}/{{ .repository }}/overlays/ephemeral'
+        - name: 'Environment Manifests'
+          value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/ephemeral'
       syncPolicy:
         automated:
           prune: true

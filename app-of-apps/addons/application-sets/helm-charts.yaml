@@ -52,6 +52,9 @@ spec:
       destination:
         name: '{{ .name }}'
         namespace: '{{ .namespace }}'
+      info:
+        - name: 'Addon Repository'
+          value: 'https://github.com/{{ .organization }}/{{ .repository }}'
       syncPolicy:
         automated:
           prune: true

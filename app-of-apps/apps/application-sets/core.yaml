@@ -46,10 +46,10 @@ spec:
         name: '{{ .name }}'
         namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
       info:
-        - name: 'Application Repository'
+        - name: 'App Repository'
           value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}'
-        - name: 'Deployment Manifests'
-          value: 'https://github.com/{{ .organization }}/{{ .repository }}/overlays/{{ index .metadata.labels "kubernetes.io/environment" }}'
+        - name: 'Environment Manifests'
+          value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/{{ index .metadata.labels "kubernetes.io/environment" }}'
       syncPolicy:
         automated:
           prune: true
