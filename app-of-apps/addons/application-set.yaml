@@ -19,9 +19,9 @@ spec:
                         secretName: github-token
                         key: token
                     filters:
-                      - repositoryMatch: 'addon'
+                      - repositoryMatch: '.+-addon$'
                         pathsExist:
-                          - chart.yaml
+                          - '*/chart.yaml'
                 - git:
                   repoURL: '{{ .url }}'
                   revision: HEAD
