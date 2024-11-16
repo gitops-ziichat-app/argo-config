@@ -1,19 +1,19 @@
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: addons
-#   namespace: argocd
-# spec:
-#   project: addons
-#   source:
-#     repoURL: https://github.com/gitops-ci-cd/argo-config.git
-#     targetRevision: HEAD
-#     path: app-of-apps/addons/application-sets
-#   destination:
-#     server: https://kubernetes.default.svc
-#     namespace: argocd
-#   syncPolicy:
-#     automated:
-#       prune: true
-#       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: addons
+  namespace: argocd
+spec:
+  project: addons
+  source:
+    repoURL: https://github.com/gitops-ci-cd/argo-config.git
+    targetRevision: HEAD
+    path: app-of-apps/addons/application-sets
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
