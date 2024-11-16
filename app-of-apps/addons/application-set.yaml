@@ -46,7 +46,7 @@ spec:
           repoURL: '{{ .repoURL }}'
           helm:
             valueFiles:
-              - '$values/{{ .metadata.labels["kubernetes.io/environment"] }}/values.yaml'
+              - '$values/{{ index .metadata.labels "kubernetes.io/environment" }}/values.yaml'
         - repoURL: '{{ .url }}'
           targetRevision: HEAD
           ref: values
