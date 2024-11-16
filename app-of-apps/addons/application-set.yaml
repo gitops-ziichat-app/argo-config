@@ -23,10 +23,10 @@ spec:
                         # pathsExist:
                         #   - '*/chart.yaml'
                 - git:
-                  repoURL: '{{ .url }}'
-                  revision: HEAD
-                  files:
-                    - path: '**/chart.yaml'
+                    repoURL: '{{ .url }}'
+                    revision: HEAD
+                    files:
+                      - path: '**/chart.yaml'
           - clusters:
               selector:
                 matchLabels:
