@@ -21,10 +21,9 @@ spec:
                     filters:
                       - repositoryMatch: '.+-addon$'
                         # pathsExist:
-                        #   - '*/chart.yaml'
+                        #   - '**/chart.yaml'
                 - git:
-                    # repoURL: '{{ .url }}.git'
-                    repoURL: https://github.com/gitops-ci-cd/kubernetes-dashboard-addon.git
+                    repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}.git'
                     revision: HEAD
                     files:
                       - path: '**/chart.yaml'
@@ -47,7 +46,7 @@ spec:
           helm:
             valueFiles:
               - '$values/{{ index .metadata.labels "kubernetes.io/environment" }}/values.yaml'
-        - repoURL: https://github.com/gitops-ci-cd/kubernetes-dashboard-addon
+        - repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}'
           targetRevision: HEAD
           ref: values
       destination:
