@@ -21,7 +21,7 @@ spec:
                     filters:
                       - repositoryMatch: '.+-deployment$'
                         pathsExist:
-                          - overlays/ephemeral/kustomization.yaml
+                          - overlays/preview/kustomization.yaml
                 - pullRequest:
                     github:
                       owner: gitops-ci-cd
@@ -30,7 +30,7 @@ spec:
                         secretName: github-token
                         key: token
                       labels:
-                        - ephemeral
+                        - preview
                     requeueAfterSeconds: 1800 # TODO: Configure webhook to trigger this
           - clusters:
               selector:
@@ -48,7 +48,7 @@ spec:
       source:
         repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}'
         targetRevision: HEAD
-        path: 'overlays/ephemeral'
+        path: 'overlays/preview'
       destination:
         name: '{{ .name }}'
         namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
@@ -56,7 +56,7 @@ spec:
         - name: 'Pull Request'
           value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}/pull/{{ .number }}'
         - name: 'Environment Manifests'
-          value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/ephemeral'
+          value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/preview'
       syncPolicy:
         automated:
           prune: true

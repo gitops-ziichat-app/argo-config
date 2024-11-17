@@ -12,7 +12,7 @@ These ApplicationSets are designed to automatically discover and deploy applicat
 
 - **pull-requests**
 
-  This ApplicationSet is responsible for deploying PR-specific environments. If a pull request is labeled with <https://github.com/gitops-ci-cd/argo-config/labels/ephemeral>, a preview environment will be created, and a deployment tracked.
+  This ApplicationSet is responsible for deploying PR-specific environments. If a pull request is labeled with <https://github.com/gitops-ci-cd/argo-config/labels/preview>, a preview environment will be created, and a deployment tracked.
 
 ## Reference
 
