@@ -53,8 +53,3 @@ spec:
         automated:
           prune: true
           selfHeal: true
-        managedNamespaceMetadata:
-          labels: {}
-          annotations: {}
-        syncOptions:
-          - CreateNamespace=true
