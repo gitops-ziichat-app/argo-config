@@ -39,7 +39,7 @@ spec:
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
-      project: apps
+      project: addons
       source:
         repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}'
         targetRevision: HEAD
