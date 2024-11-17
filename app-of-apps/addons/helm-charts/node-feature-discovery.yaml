@@ -4,6 +4,8 @@ kind: ApplicationSet
 metadata:
   name: addons-node-feature-discovery
   namespace: argocd
+  labels:
+    argocd.argoproj.io/chart: 'true'
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]

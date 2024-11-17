@@ -39,6 +39,8 @@ spec:
   template:
     metadata:
       name: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .name }}-PR{{ .number }}'
+      labels:
+        argocd.argoproj.io/chart: 'false'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
