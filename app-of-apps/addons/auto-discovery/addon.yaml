@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: apps-core
+  name: addons-auto-discovery
   namespace: argocd
 spec:
   goTemplate: true
@@ -19,7 +19,7 @@ spec:
                         secretName: github-token
                         key: token
                     filters:
-                      - repositoryMatch: '.+-deployment$'
+                      - repositoryMatch: '.+-addon$'
                         pathsExist:
                           - base/kustomization.yaml
                 - git:
@@ -33,7 +33,7 @@ spec:
                   kubernetes.io/environment: '{{ .path.basename }}'
   template:
     metadata:
-      name: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .name }}'
+      name: '{{ regexReplaceAll "-addon$" .repository "" }}-{{ .name }}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
@@ -44,10 +44,9 @@ spec:
         path: 'overlays/{{ index .metadata.labels "kubernetes.io/environment" }}'
       destination:
         name: '{{ .name }}'
-        namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
       info:
         - name: 'App Repository'
-          value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}'
+          value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-addon$" .repository "" }}'
         - name: 'Environment Manifests'
           value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/{{ index .metadata.labels "kubernetes.io/environment" }}'
       syncPolicy:
