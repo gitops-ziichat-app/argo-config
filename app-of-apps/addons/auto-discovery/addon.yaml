@@ -45,8 +45,6 @@ spec:
       destination:
         name: '{{ .name }}'
       info:
-        - name: 'App Repository'
-          value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-addon$" .repository "" }}'
         - name: 'Environment Manifests'
           value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/{{ index .metadata.labels "kubernetes.io/environment" }}'
       syncPolicy:
