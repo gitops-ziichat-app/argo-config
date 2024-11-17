@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/gitops-ci-cd/argo-config.git
     targetRevision: HEAD
-    path: app-of-apps/apps/application-sets
+    path: app-of-apps/apps/auto-discovery
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
