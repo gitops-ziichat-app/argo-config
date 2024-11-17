@@ -35,7 +35,7 @@ spec:
     metadata:
       name: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .name }}'
       labels:
-        argocd.argoproj.io/chart: 'false'
+        argocd.argoproj.io/type: directory
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
