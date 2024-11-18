@@ -6,7 +6,12 @@ These ApplicationSets are designed to automatically discover and deploy applicat
 
 - **deployment**
 
-  This ApplicationSet is responsible for ensuring that kustomize overlays from repositories suffixed with `-deployment` are applied to their respective environments. The following labels **MUST** be added (easily via the Argo CD UI) to any cluster that you want apps deployed to:
+  This ApplicationSet is responsible for ensuring that kustomize overlays from repositories suffixed with `-deployment` are applied to their respective environments. These repositories SHOULD contain kustomizations within
+
+  - ./base
+  - ./overlays/{environment}
+
+  The following labels **MUST** be added (easily via the Argo CD UI) to any cluster that you want apps deployed to:
 
   - kubernetes.io/environment
 
