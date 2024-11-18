@@ -25,7 +25,7 @@ spec:
           helm:
             ignoreMissingValueFiles: true
             valueFiles:
-              - '$values/app-of-apps/addons/helm-charts/node-feature-discovery/global.values.yaml'
+              - '$values/app-of-apps/addons/helm-charts/node-feature-discovery/values.yaml'
               - '$values/app-of-apps/addons/helm-charts/node-feature-discovery/{{ index .metadata.labels "kubernetes.io/environment" }}.values.yaml'
             valuesObject: {}
         - repoURL: https://github.com/gitops-ci-cd/argo-config

@@ -58,6 +58,7 @@ spec:
         targetRevision: HEAD
         path: 'overlays/preview'
         kustomize:
+          nameSuffix: '-pr{{ .number }}'
           images:
             - 'ghcr.io/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}:{{ .head_sha }}'
       destination:
