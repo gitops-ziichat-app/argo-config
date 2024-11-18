@@ -24,7 +24,7 @@ spec:
                           - overlays/preview/kustomization.yaml
                 - pullRequest:
                     github:
-                      owner: gitops-ci-cd
+                      owner: '{{ .organization }}'
                       repo: '{{ regexReplaceAll "-deployment$" .repository "" }}'
                       tokenRef:
                         secretName: github-token
@@ -38,9 +38,17 @@ spec:
                   kubernetes.io/environment: sandbox
   template:
     metadata:
-      name: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .name }}-PR{{ .number }}'
+      name: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .name }}-pr{{ .number }}'
       labels:
         argocd.argoproj.io/type: directory
+      annotations:
+        github.com/repo: '{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}'
+        github.com/environment: preview
+        github.com/pr: '{{ .number }}'
+        github.com/branch: '{{ .branch }}'
+        github.com/branch-slug: '{{ .branch_slug }}'
+        github.com/ref: '{{ .head_sha }}'
+        github.com/author: '{{ .author }}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
