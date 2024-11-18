@@ -57,6 +57,10 @@ spec:
         repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}'
         targetRevision: HEAD
         path: 'overlays/preview'
+        kustomize:
+          images:
+            - name: 'ghcr.io/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}'
+              newTag: '{{ .head_sha }}'
       destination:
         name: '{{ .name }}'
         namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'

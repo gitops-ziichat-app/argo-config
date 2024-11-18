@@ -24,5 +24,6 @@ The following documentation should be reviewed for more information:
 - [Git Generator](https://argo-cd.readthedocs.io/en/latest/operator-manual/applicationset/Generators-Git/)
 - [Pull Request Generator](https://argo-cd.readthedocs.io/en/latest/operator-manual/applicationset/Generators-Pull-Request/)
 - [Cluster Generator](https://argo-cd.readthedocs.io/en/latest/operator-manual/applicationset/Generators-Cluster/)
+- [Kustomize](https://argo-cd.readthedocs.io/en/latest/user-guide/kustomize/)
 - [Go Template](https://argo-cd.readthedocs.io/en/latest/operator-manual/applicationset/GoTemplate/)
 - [Sync Options](https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/)
