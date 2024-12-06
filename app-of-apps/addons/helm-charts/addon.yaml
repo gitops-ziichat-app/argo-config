@@ -25,7 +25,7 @@
 #           - clusters: {}
 #   template:
 #     metadata:
-#       name: '{{ .chart }}-{{ .name }}'
+#       name: '{{ .chart }}-{{ .name }}-chart'
 #       labels:
 #         argocd.argoproj.io/type: helm
 #       finalizers:
