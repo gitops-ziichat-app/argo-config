@@ -11,7 +11,7 @@ spec:
     - clusters: {}
   template:
     metadata:
-      name: 'node-feature-discovery-{{.name}}-chart'
+      name: 'node-feature-discovery-chart-{{.name}}'
       labels:
         argocd.argoproj.io/type: helm
       finalizers:

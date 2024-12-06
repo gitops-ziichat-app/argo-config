@@ -11,7 +11,7 @@ spec:
     - clusters: {}
   template:
     metadata:
-      name: 'kyverno-{{.name}}-chart'
+      name: 'kyverno-chart-{{.name}}'
       labels:
         argocd.argoproj.io/type: helm
       finalizers:
