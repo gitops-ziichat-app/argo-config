@@ -18,9 +18,11 @@
 #               elements:
 #                 - repository: https://charts.crossplane.io/stable
 #                   chart: crossplane
+#                   namespace: crossplane-system
 #                   version: 1.18.1
 #                 - repository: https://kyverno.github.io/kyverno/
 #                   chart: kyverno
+#                   namespace: kyverno
 #                   version: 3.3.3
 #           - clusters: {}
 #   template:
