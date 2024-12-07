@@ -11,3 +11,4 @@ data:
   resource.customizations.ignoreDifferences.apiextensions.crossplane.io_CompositeResourceDefinition: |
     jqPathExpressions:
       - '.spec.versions[]?.defaultCompositionRef'
+  application.resourceTrackingMethod: annotation
