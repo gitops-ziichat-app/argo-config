@@ -8,8 +8,6 @@ metadata:
   namespace: argocd
 data:
   kustomize.buildOptions: "--enable-helm"
-  resource.customizations: |
-    apiextensions.crossplane.io/CompositeResourceDefinition:
-      ignoreDifferences: |
-        jsonPointers:
-          - /spec/versions/*/defaultCompositionRef
+  resource.customizations.ignoreDifferences.apiextensions.crossplane.io_CompositeResourceDefinition: |
+    jsonPointers:
+      - /spec/versions/*/defaultCompositionRef
