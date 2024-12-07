@@ -11,7 +11,7 @@ spec:
     - clusters: {}
   template:
     metadata:
-      name: 'crossplane-chart-{{.name}}'
+      name: 'crossplane-addon-chart-{{.name}}'
       labels:
         argocd.argoproj.io/type: helm
       finalizers:
