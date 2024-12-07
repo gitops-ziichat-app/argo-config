@@ -78,3 +78,4 @@ spec:
           annotations: {}
         syncOptions:
           - CreateNamespace=true
+          - ServerSideApply=true
