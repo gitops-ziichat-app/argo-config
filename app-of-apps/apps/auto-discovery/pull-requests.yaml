@@ -78,8 +78,3 @@ spec:
           annotations: {}
         syncOptions:
           - CreateNamespace=true
-      resources:
-        - group: acme.com
-          kind: AcmeAppClaim
-        - group: acme.com
-          kind: AcmeApp
