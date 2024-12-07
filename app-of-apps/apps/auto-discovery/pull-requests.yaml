@@ -58,7 +58,6 @@ spec:
         targetRevision: HEAD
         path: 'overlays/preview'
         kustomize:
-          namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
           nameSuffix: '-pr{{ .number }}'
           images:
             - 'ghcr.io/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}:{{ .head_sha }}'
