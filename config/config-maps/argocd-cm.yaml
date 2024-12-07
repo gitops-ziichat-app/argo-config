@@ -11,5 +11,3 @@ data:
   resource.customizations.ignoreDifferences.apiextensions.crossplane.io_CompositeResourceDefinition: |
     jsonPointers:
       - /spec/versions/*/defaultCompositionRef
-    jqPathExpressions:
-      - '.spec.versions[]?.defaultCompositionRef'
