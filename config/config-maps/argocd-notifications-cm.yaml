@@ -3,30 +3,52 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: argocd-notifications-cm
-data: {}
-  # service.webhook.cd-visibility-webhook: |
-  #   url: https://webhook-intake.datadoghq.com/api/v2/webhook
-  #   headers:
-  #     - name: "DD-CD-PROVIDER-ARGOCD"
-  #       value: "true"
-  #     - name: "DD-API-KEY"
-  #       value: $dd-api-key
-  #     - name: "Content-Type"
-  #       value: "application/json"
+  namespace: argocd
+data:
+  service.webhook.github: |
+    url: https://api.github.com
+    headers:
+      - name: Accept
+        value: application/vnd.github+json
+      - name: Authorization
+        value: Bearer $github-token
+      - name: X-GitHub-Api-Version
+        value: 2022-11-28
 
-  # template.cd-visibility-template: |
-  #   webhook:
-  #     cd-visibility-webhook:
-  #       method: POST
-  #       body: |
-  #         {
-  #           "app": {{toJson .app}},
-  #           "context": {{toJson .context}},
-  #           "service_type": {{toJson .serviceType}},
-  #           "recipient": {{toJson .recipient}},
-  #           "commit_metadata": {{toJson (call .repo.GetCommitMetadata .app.status.operationState.syncResult.revision)}}
-  #         }
+  template.github-deployment-status: |
+    webhook:
+      github:
+        method: POST
+        path: /repos/{{ call .repo.FullNameByRepoURL .app.spec.source.repoURL }}/deployments/{{ .app.metadata.annotations.github.com/deployment-id }}/statuses
+        body: |
+          {
+            {{ if eq .app.status.operationState.phase "Running" }} "state": "in_progress" {{ end }}
+            {{ if eq .app.status.operationState.phase "Succeeded" }} "state": "success" {{ end }}
+            {{ if eq .app.status.operationState.phase "Error" }} "state": "error" {{ end }}
+            {{ if eq .app.status.operationState.phase "Failed" }} "state": "failure" {{ end }},
 
-  # trigger.cd-visibility-trigger: |
-  #   - when: app.status.operationState.phase in ['Succeeded', 'Failed', 'Error', 'Running'] and app.status.health.status in ['Healthy', 'Degraded']
-  #     send: [cd-visibility-template]
+            {{ if eq .app.metadata.annotations.github.com/environment "preview" }} "environment_url": "https://{{ .app.metadata.annotations.github.com/branch-slug }}.sandbox.acme.com" {{ end }}
+            {{ if eq .app.metadata.annotations.github.com/environment "sandbox" }} "environment_url": "https://sandbox.acme.com" {{ end }}
+            {{ if eq .app.metadata.annotations.github.com/environment "production" }} "environment_url": "https://acme.com" {{ end }},
+
+            "owner": "{{ .app.metadata.annotations.github.com/owner }}",
+            "repo": "{{ .app.metadata.annotations.github.com/repo }}",
+            "deployment_id": "{{ .app.metadata.annotations.github.com/deployment-id }}",
+            "environment": "{{ .app.metadata.annotations.github.com/environment }}",
+            "log_url": "{{ .context.argocdUrl }}/applications/{{ .app.metadata.name }}",
+            "description": "ArgoCD status updated",
+          }
+
+  trigger.sync-operation-change: |
+    - when: app.status.operationState != nil and app.status.operationState.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
+      oncePer: app.status.sync.revision
+      send:
+        - github-deployment-status
+    - when: app.status.operationState != nil and app.status.operationState.phase in ['Running']
+      oncePer: app.status.sync.revision
+      send:
+        - github-deployment-status
+    - when: app.status.operationState != nil and app.status.operationState.phase in ['Error', 'Failed']
+      oncePer: app.status.sync.revision
+      send:
+        - github-deployment-status

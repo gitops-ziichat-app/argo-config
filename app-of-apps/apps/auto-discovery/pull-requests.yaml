@@ -42,7 +42,8 @@ spec:
       labels:
         argocd.argoproj.io/type: directory
       annotations:
-        github.com/repo: '{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}'
+        github.com/owner: '{{ .organization }}'
+        github.com/repo: '{{ regexReplaceAll "-deployment$" .repository "" }}'
         github.com/environment: preview
         github.com/pr: '{{ .number }}'
         github.com/branch: '{{ .branch }}'
