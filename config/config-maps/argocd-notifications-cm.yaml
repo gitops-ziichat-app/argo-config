@@ -19,25 +19,26 @@ data:
     webhook:
       github:
         method: POST
-        # TODO: this url does not exist. Check with github if this is reasonable, otherwise use a github app to do this
-        path: /repos/{{ call .repo.FullNameByRepoURL .app.spec.source.repoURL }}/deployments/ref/{{ .app.metadata.annotations.github.com/branch }}/statuses
+        path: /repos/{{ call .repo.FullNameByRepoURL .app.spec.source.repoURL }}/dispatches
         body: |
           {
-            {{ if eq .app.status.operationState.phase "Running" }} "state": "in_progress" {{ end }}
-            {{ if eq .app.status.operationState.phase "Succeeded" }} "state": "success" {{ end }}
-            {{ if eq .app.status.operationState.phase "Error" }} "state": "error" {{ end }}
-            {{ if eq .app.status.operationState.phase "Failed" }} "state": "failure" {{ end }},
+            "event_type": "sync-deployment-status",
+            "client_payload": {
+              "state":
+              {{ if eq .app.status.operationState.phase "Running" }}"in_progress"{{ end }}
+              {{ if eq .app.status.operationState.phase "Succeeded" }}"success"{{ end }}
+              {{ if eq .app.status.operationState.phase "Error" }}"error"{{ end }}
+              {{ if eq .app.status.operationState.phase "Failed" }}"failure"{{ end }},
 
-            {{ if eq .app.metadata.annotations.github.com/environment "preview" }} "environment_url": "https://{{ .app.metadata.annotations.github.com/branch-slug }}.sandbox.acme.com" {{ end }}
-            {{ if eq .app.metadata.annotations.github.com/environment "sandbox" }} "environment_url": "https://sandbox.acme.com" {{ end }}
-            {{ if eq .app.metadata.annotations.github.com/environment "production" }} "environment_url": "https://acme.com" {{ end }},
+              "environment_url":
+              {{ if eq .app.metadata.annotations.github.com/environment "preview" }}"https://{{ .app.metadata.annotations.github.com/branch-slug }}.sandbox.acme.com"{{ end }}
+              {{ if eq .app.metadata.annotations.github.com/environment "sandbox" }}"https://sandbox.acme.com"{{ end }}
+              {{ if eq .app.metadata.annotations.github.com/environment "production" }}"https://acme.com"{{ end }},
 
-            "owner": "{{ .app.metadata.annotations.github.com/owner }}",
-            "repo": "{{ .app.metadata.annotations.github.com/repo }}",
-            # "deployment_id": "",
-            "environment": "{{ .app.metadata.annotations.github.com/environment }}",
-            "log_url": "{{ .context.argocdUrl }}/applications/{{ .app.metadata.name }}",
-            "description": "ArgoCD status updated",
+              "ref": "{{ .app.metadata.annotations.github.com/ref }}",
+              "environment": "{{ .app.metadata.annotations.github.com/environment }}",
+              "log_url": "{{ .context.argocdUrl }}/applications/{{ .app.metadata.name }}",
+            }
           }
 
   trigger.sync-operation-change: |

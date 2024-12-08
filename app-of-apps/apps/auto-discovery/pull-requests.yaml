@@ -46,6 +46,8 @@ spec:
         github.com/repo: '{{ regexReplaceAll "-deployment$" .repository "" }}'
         github.com/environment: preview
         github.com/pr: '{{ .number }}'
+        github.com/target-branch: '{{ .target_branch }}'
+        github.com/target-branch-slug: '{{ .target_branch_slug }}'
         github.com/branch: '{{ .branch }}'
         github.com/branch-slug: '{{ .branch_slug }}'
         github.com/ref: '{{ .head_sha }}'
