@@ -19,7 +19,8 @@ data:
     webhook:
       github:
         method: POST
-        path: /repos/{{ call .repo.FullNameByRepoURL .app.spec.source.repoURL }}/deployments/{{ .app.metadata.annotations.github.com/deployment-id }}/statuses
+        # TODO: this url does not exist. Check with github if this is reasonable, otherwise use a github app to do this
+        path: /repos/{{ call .repo.FullNameByRepoURL .app.spec.source.repoURL }}/deployments/ref/{{ .app.metadata.annotations.github.com/branch }}/statuses
         body: |
           {
             {{ if eq .app.status.operationState.phase "Running" }} "state": "in_progress" {{ end }}
@@ -33,7 +34,7 @@ data:
 
             "owner": "{{ .app.metadata.annotations.github.com/owner }}",
             "repo": "{{ .app.metadata.annotations.github.com/repo }}",
-            "deployment_id": "{{ .app.metadata.annotations.github.com/deployment-id }}",
+            # "deployment_id": "",
             "environment": "{{ .app.metadata.annotations.github.com/environment }}",
             "log_url": "{{ .context.argocdUrl }}/applications/{{ .app.metadata.name }}",
             "description": "ArgoCD status updated",
