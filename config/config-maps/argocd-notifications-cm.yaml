@@ -31,12 +31,12 @@ data:
               {{ if eq .app.status.operationState.phase "Running" }}"in_progress"
               {{ else if eq .app.status.operationState.phase "Succeeded" }}"success"
               {{ else if eq .app.status.operationState.phase "Error" }}"error"
-              {{ else eq .app.status.operationState.phase "Failed" }}"failure"{{ end }},
+              {{ else }}"failure"{{ end }},
 
               "environment_url":
               {{ if eq .app.metadata.annotations["github.com/environment"] "preview" }}"https://{{ .app.metadata.annotations["github.com/branch-slug"] }}.sandbox.acme.com"
               {{ else if eq .app.metadata.annotations["github.com/environment"] "sandbox" }}"https://sandbox.acme.com"
-              {{ else eq .app.metadata.annotations["github.com/environment"] "production" }}"https://acme.com"{{ end }},
+              {{ else }}"https://acme.com"{{ end }},
 
               "ref": "{{ .app.metadata.annotations["github.com/ref"] }}",
               "environment": "{{ .app.metadata.annotations["github.com/environment"] }}",
