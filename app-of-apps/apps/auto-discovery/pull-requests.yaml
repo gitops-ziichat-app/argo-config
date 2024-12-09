@@ -36,9 +36,6 @@ spec:
               selector:
                 matchLabels:
                   kubernetes.io/environment: sandbox
-              values:
-                # TODO: Hack, per https://github.com/argoproj/argo-cd/issues/11408
-                pr_branch: '{{ .branch }}'
   template:
     metadata:
       name: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .name }}-pr{{ .number }}'
@@ -53,7 +50,7 @@ spec:
         github.com/pr: '{{ .number }}'
         github.com/target-branch: '{{ .target_branch }}'
         github.com/target-branch-slug: '{{ .target_branch_slug }}'
-        github.com/branch: '{{ .values.pr_branch }}'
+        github.com/branch: '{{ .branch }}'
         github.com/branch-slug: '{{ .branch_slug }}'
         github.com/ref: 'verify_repo_dispatch'
         github.com/author: '{{ .author }}'
