@@ -53,7 +53,7 @@ spec:
         github.com/target-branch-slug: '{{ .target_branch_slug }}'
         github.com/branch: '{{ .branch }}'
         github.com/branch-slug: '{{ .branch_slug }}'
-        github.com/ref: '{{ .head_sha }}'
+        github.com/ref: 'verify_repo_dispatch'
         github.com/author: '{{ .author }}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
