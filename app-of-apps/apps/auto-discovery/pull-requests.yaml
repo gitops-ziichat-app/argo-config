@@ -44,6 +44,7 @@ spec:
       labels:
         argocd.argoproj.io/type: directory
       annotations:
+        notifications.argoproj.io/subscribe.sync-operation-change.github: ""
         github.com/owner: '{{ .organization }}'
         github.com/repo: '{{ regexReplaceAll "-deployment$" .repository "" }}'
         github.com/environment: preview
