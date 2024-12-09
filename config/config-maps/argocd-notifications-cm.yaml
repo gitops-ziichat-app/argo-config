@@ -25,6 +25,8 @@ data:
         path: "/repos/{{ index .app.metadata.annotations \"github.com/owner\" }}/{{ index .app.metadata.annotations \"github.com/repo\" }}/dispatches"
         body: |
           {
+            "owner": "{{ index .app.metadata.annotations "github.com/owner" }}",
+            "repo": "{{ index .app.metadata.annotations "github.com/repo" }}",
             "event_type": "sync-deployment-status",
             "client_payload": {
               {{ if eq .app.status.operationState.phase "Running" }}
