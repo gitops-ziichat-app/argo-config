@@ -24,14 +24,14 @@ data:
           {
             "event_type": "sync-deployment-status",
             "client_payload": {
-              {{ if eq .app.status.operationState.phase "Running" }}
+              {{ if .app.metadata.deletionTimestamp }}
+              "state": "inactive",
+              {{ else if eq .app.status.operationState.phase "Running" }}
               "state": "in_progress",
               {{ else if eq .app.status.operationState.phase "Succeeded" }}
               "state": "success",
               {{ else if eq .app.status.operationState.phase "Error" }}
               "state": "error",
-              {{ else if .app.metadata.deletionTimestamp }}
-              "state": "inactive",
               {{ else }}
               "state": "failure",
               {{ end }}
