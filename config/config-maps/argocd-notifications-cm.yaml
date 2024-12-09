@@ -50,11 +50,14 @@ data:
 
   trigger.sync-operation-change: |
     - when: app.status.operationState != nil and app.status.operationState.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
+      oncePer: app.status.sync.revision
       send:
         - github-deployment-status
     - when: app.status.operationState != nil and app.status.operationState.phase in ['Running']
+      oncePer: app.status.sync.revision
       send:
         - github-deployment-status
     - when: app.status.operationState != nil and app.status.operationState.phase in ['Error', 'Failed']
+      oncePer: app.status.sync.revision
       send:
         - github-deployment-status
