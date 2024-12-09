@@ -34,12 +34,12 @@ data:
               {{ else }}"failure"{{ end }},
 
               "environment_url":
-              {{ if eq .app.metadata.annotations.github.com\/environment "preview" }}"https://{{ .app.metadata.annotations.github.com\/branch-slug }}.sandbox.acme.com"
-              {{ else if eq .app.metadata.annotations.github.com\/environment "sandbox" }}"https://sandbox.acme.com"
+              {{ if eq .app.metadata.annotations.github.com~1environment "preview" }}"https://{{ .app.metadata.annotations.github.com~1branch-slug }}.sandbox.acme.com"
+              {{ else if eq .app.metadata.annotations.github.com~1environment "sandbox" }}"https://sandbox.acme.com"
               {{ else }}"https://acme.com"{{ end }},
 
-              "ref": "{{ .app.metadata.annotations.github.com\/ref }}",
-              "environment": "{{ .app.metadata.annotations.github.com\/environment }}",
+              "ref": "{{ .app.metadata.annotations.github.com~1ref }}",
+              "environment": "{{ .app.metadata.annotations.github.com~1environment }}",
               "log_url": "{{ .context.argocdUrl }}/applications/{{ .app.metadata.name }}",
             }
           }
