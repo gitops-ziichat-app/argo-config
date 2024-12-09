@@ -5,7 +5,7 @@ metadata:
   name: apps-pull-requests
   namespace: argocd
   annotations:
-    argocd-notifications.argoproj.io/subscribe.on-sync-operation-change: github
+    notifications.argoproj.io/subscribe.sync-operation-change.github: ""
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]

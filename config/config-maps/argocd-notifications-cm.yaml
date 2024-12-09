@@ -11,10 +11,7 @@ data:
       - name: Accept
         value: "application/vnd.github+json"
       - name: Authorization
-        valueFrom:
-          secretKeyRef:
-            name: github-token
-            key: token
+        value: "Bearer $github-token"
       - name: X-GitHub-Api-Version
         value: 2022-11-28
 
