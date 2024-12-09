@@ -38,7 +38,7 @@ spec:
                   kubernetes.io/environment: sandbox
               values:
                 # TODO: Hack, per https://github.com/argoproj/argo-cd/issues/11408
-                pr_branch: '{{`{{ .branch }}`}}'
+                pr_branch: '{{ .branch }}'
   template:
     metadata:
       name: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .name }}-pr{{ .number }}'
