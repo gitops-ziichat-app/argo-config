@@ -32,6 +32,9 @@ spec:
                       labels:
                         - preview
                     requeueAfterSeconds: 1800 # TODO: Configure webhook to trigger this
+                    values:
+                      - pr_branch: '{{ .branch }}'
+                      - pr_branch_slug: '{{ .branch_slug }}'
           - clusters:
               selector:
                 matchLabels:
@@ -50,8 +53,8 @@ spec:
         github.com/pr: '{{ .number }}'
         github.com/target-branch: '{{ .target_branch }}'
         github.com/target-branch-slug: '{{ .target_branch_slug }}'
-        github.com/branch: '{{ .branch }}'
-        github.com/branch-slug: '{{ .branch_slug }}'
+        github.com/branch: '{{ .values.branch }}'
+        github.com/branch-slug: '{{ .values.branch_slug }}'
         github.com/ref: 'verify_repo_dispatch'
         github.com/author: '{{ .author }}'
       finalizers:
