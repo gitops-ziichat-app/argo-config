@@ -22,7 +22,7 @@ data:
     webhook:
       github:
         method: POST
-        path: /repos/{{ call .repo.FullNameByRepoURL .app.spec.source.repoURL }}/dispatches
+        path: "/repos/{{ call .repo.FullNameByRepoURL .app.spec.source.repoURL }}/dispatches"
         body: |
           {
             "event_type": "sync-deployment-status",
