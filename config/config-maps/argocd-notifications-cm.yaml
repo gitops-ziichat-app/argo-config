@@ -30,7 +30,7 @@ data:
               "state": "success",
               {{ else if eq .app.status.operationState.phase "Error" }}
               "state": "error",
-              {{ else if .app.metadata.deletionTimestamp != nil }}
+              {{ else if .app.metadata.deletionTimestamp }}
               "state": "inactive",
               {{ else }}
               "state": "failure",
