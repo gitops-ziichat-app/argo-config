@@ -24,7 +24,6 @@ data:
         method: POST
         path: "/repos/{{ call .repo.FullNameByRepoURL .app.spec.source.repoURL }}/dispatches"
         body: |
-          {{ with .app.metadata.annotations }}
           {
             "event_type": "sync-deployment-status",
             "client_payload": {
@@ -38,20 +37,19 @@ data:
               "state": "failure",
               {{ end }}
 
-              {{ if eq .['github.com/environment'] "preview" }}
-              "environment_url": "https://{{ .['github.com/branch-slug'] }}.sandbox.acme.com",
-              {{ else if eq .['github.com/environment'] "sandbox" }}
+              {{ if eq (index .app.metadata.annotations "github.com/environment") "preview" }}
+              "environment_url": "https://{{ .app.metadata.annotations['github.com/branch-slug'] }}.sandbox.acme.com",
+              {{ else if eq (index .app.metadata.annotations "github.com/environment") "sandbox" }}
               "environment_url": "https://sandbox.acme.com",
               {{ else }}
               "environment_url": "https://acme.com",
               {{ end }}
 
-              "ref": "{{ .['github.com/ref'] }}",
-              "environment": "{{ .['github.com/environment'] }}",
+              "ref": "{{ .app.metadata.annotations['github.com/ref'] }}",
+              "environment": "{{ .app.metadata.annotations['github.com/environment'] }}",
               "log_url": "{{ .context.argocdUrl }}/applications/{{ .app.metadata.name }}"
             }
           }
-          {{ end }}
 
   trigger.sync-operation-change: |
     - when: app.status.operationState != nil and app.status.operationState.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
