@@ -26,7 +26,7 @@ kubectl apply -f ./app-of-apps/application.yaml
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 ```
 
-<https://localhost> will provide the Argo CD UI.
+<https://argo.localhost> will provide the Argo CD UI.
 
 ### Configuration
 

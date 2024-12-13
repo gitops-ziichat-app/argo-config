@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-node-feature-discovery
+  name: addons-traefik
   namespace: argocd
 spec:
   goTemplate: true
@@ -11,7 +11,7 @@ spec:
     - clusters: {}
   template:
     metadata:
-      name: 'node-feature-discovery-addon-chart-{{ .name }}'
+      name: 'traefik-addon-chart-{{ .name }}'
       labels:
         argocd.argoproj.io/type: helm
       finalizers:
@@ -19,21 +19,21 @@ spec:
     spec:
       project: addons
       sources:
-        - chart: node-feature-discovery
-          targetRevision: 0.15.4
-          repoURL: https://kubernetes-sigs.github.io/node-feature-discovery/charts
+        - chart: traefik
+          targetRevision: 33.1.0
+          repoURL: https://traefik.github.io/charts
           helm:
             ignoreMissingValueFiles: true
             valueFiles:
-              - '$values/app-of-apps/addons/helm-charts/node-feature-discovery/values.yaml'
-              - '$values/app-of-apps/addons/helm-charts/node-feature-discovery/{{ index .metadata.labels "kubernetes.io/environment" }}.values.yaml'
+              - '$values/app-of-apps/addons/helm-charts/traefik/values.yaml'
+              - '$values/app-of-apps/addons/helm-charts/traefik/{{ index .metadata.labels "kubernetes.io/environment" }}.values.yaml'
             valuesObject: {}
         - repoURL: https://github.com/gitops-ci-cd/argo-config
           targetRevision: HEAD
           ref: values
       destination:
         name: '{{ .name }}'
-        namespace: node-feature-discovery
+        namespace: traefik
       syncPolicy:
         automated:
           prune: true

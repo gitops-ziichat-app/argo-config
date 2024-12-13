@@ -4,7 +4,8 @@ kind: Kustomization
 
 resources:
   - ../base
+  - httproute.yaml
 
-patches:
+patches: []
   # - path: deployment-patch.yaml
-  - path: service-patch.yaml
+  # - path: service.yaml

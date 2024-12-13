@@ -11,7 +11,7 @@ spec:
     - clusters: {}
   template:
     metadata:
-      name: 'kyverno-addon-chart-{{.name}}'
+      name: 'kyverno-addon-chart-{{ .name }}'
       labels:
         argocd.argoproj.io/type: helm
       finalizers:
@@ -32,7 +32,7 @@ spec:
           targetRevision: HEAD
           ref: values
       destination:
-        name: '{{.name}}'
+        name: '{{ .name }}'
         namespace: kyverno
       syncPolicy:
         automated:
