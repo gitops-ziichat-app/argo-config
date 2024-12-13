@@ -7,5 +7,3 @@ resources:
   - httproute.yaml
 
 patches: []
-  # - path: deployment-patch.yaml
-  # - path: service.yaml

@@ -21,12 +21,9 @@ kubectl apply -f ./config/application.yaml
 
 # Give ArgoCD an application to manage the rest of the applications via AoA
 kubectl apply -f ./app-of-apps/application.yaml
-
-# TODO: Add Gateway API setup
-kubectl port-forward svc/argocd-server -n argocd 8080:443
 ```
 
-<https://argo.localhost> will provide the Argo CD UI.
+<http://argo.localhost> will provide the Argo CD UI!
 
 ### Configuration
 
