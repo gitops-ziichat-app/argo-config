@@ -14,7 +14,7 @@ The [argo](./argo/) directory contains the installation files for Argo CD.
 
 ```sh
 # Install ArgoCD
-kubectl apply -k argo/overlay
+kubectl apply -k argo/overlays/local
 
 # Instruct ArgoCD to manage itself via GitOps
 kubectl apply -f ./config/application.yaml
