@@ -1,5 +1,5 @@
 # https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
 ---
-experimental:
+providers:
   kubernetesGateway:
     enabled: true
