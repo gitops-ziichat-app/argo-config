@@ -5,3 +5,6 @@ deployment:
       hostnames:
         - "argo.localhost"
         - "k8s.localhost"
+additionalArguments:
+  - "--entryPoints.web.address=:80"
+  - "--entryPoints.websecure.address=:443"
