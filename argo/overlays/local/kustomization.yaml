@@ -6,4 +6,5 @@ resources:
   - ../../base
   - httproute.yaml
 
-patches: []
+patches:
+  - path: configmap.yaml
