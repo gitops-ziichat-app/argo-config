@@ -7,6 +7,7 @@ metadata:
 spec:
   parentRefs:
     - name: http
+      namespace: traefik
   hostnames:
     - "argo.localhost"
   rules:
