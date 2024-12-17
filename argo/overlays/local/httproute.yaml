@@ -6,7 +6,7 @@ metadata:
   namespace: argocd
 spec:
   parentRefs:
-    - name: http
+    - name: external-http-gateway
       namespace: traefik
   hostnames:
     - "argo.localhost"
