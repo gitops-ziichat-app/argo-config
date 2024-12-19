@@ -35,7 +35,8 @@ spec:
           - clusters:
               selector:
                 matchLabels:
-                  kubernetes.io/environment: sandbox
+                  kubernetes.io/environment: sandbox,local # TODO: Remove local
+
   template:
     metadata:
       name: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .name }}-pr{{ .number }}'
