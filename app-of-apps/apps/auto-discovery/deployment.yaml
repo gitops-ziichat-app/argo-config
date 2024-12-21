@@ -36,6 +36,9 @@ spec:
       name: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .name }}'
       labels:
         argocd.argoproj.io/type: directory
+      annotations:
+        argocd-image-updater.argoproj.io/image-list: 'app=ghcr.io/{{ .organization }}/{{ .repository }}'
+        argocd-image-updater.argoproj.io/app.update-strategy: latest
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:

@@ -5,3 +5,28 @@ metadata:
   name: argocd-cmd-params-cm
 data:
   applicationsetcontroller.enable.new.git.file.globbing: "true"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-image-updater-config
+data:
+  registries.conf: |
+    registries:
+      - name: GitHub Container Registry
+        api_url: https://ghcr.io
+        credentials:
+          username: dudo
+          passwordSecret:
+            name: github-token
+            key: token
+  config.yaml: |
+    git:
+      write_back_method: git
+      default_branch: main
+      git_provider: github
+      github:
+        tokenSecret:
+          name: github-token
+          key: token
