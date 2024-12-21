@@ -14,13 +14,12 @@ metadata:
 data:
   registries.conf: |
     registries:
-      - name: GitHub Container Registry
+      - name: GHCR
+        prefix: ghcr.io
         api_url: https://ghcr.io
-        credentials:
-          username: dudo
-          passwordSecret:
-            name: github-token
-            key: token
+        credentials: secret:argocd/github-token#token
+        default: true
+
   config.yaml: |
     git:
       write_back_method: git
