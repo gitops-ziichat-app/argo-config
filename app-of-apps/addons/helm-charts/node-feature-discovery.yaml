@@ -14,6 +14,10 @@ spec:
       name: 'node-feature-discovery-addon-chart-{{ .name }}'
       labels:
         argocd.argoproj.io/type: helm
+      annotations:
+        argocd-image-updater.argoproj.io/chart-name: node-feature-discovery
+        argocd-image-updater.argoproj.io/chart-repo-url: https://kubernetes-sigs.github.io/node-feature-discovery/charts
+        argocd-image-updater.argoproj.io/chart-update-strategy: latest
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:

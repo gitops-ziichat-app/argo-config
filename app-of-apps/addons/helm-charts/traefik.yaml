@@ -14,6 +14,10 @@ spec:
       name: 'traefik-addon-chart-{{ .name }}'
       labels:
         argocd.argoproj.io/type: helm
+      annotations:
+        argocd-image-updater.argoproj.io/chart-name: traefik
+        argocd-image-updater.argoproj.io/chart-repo-url: https://traefik.github.io/charts
+        argocd-image-updater.argoproj.io/chart-update-strategy: latest
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:

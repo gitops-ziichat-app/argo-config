@@ -14,6 +14,10 @@ spec:
       name: 'crossplane-addon-chart-{{ .name }}'
       labels:
         argocd.argoproj.io/type: helm
+      annotations:
+        argocd-image-updater.argoproj.io/chart-name: crossplane
+        argocd-image-updater.argoproj.io/chart-repo-url: https://charts.crossplane.io/stable
+        argocd-image-updater.argoproj.io/chart-update-strategy: latest
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:

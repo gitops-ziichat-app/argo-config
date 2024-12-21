@@ -30,6 +30,10 @@
 #       name: '{{ .chart }}-addon-chart-{{ .name }}'
 #       labels:
 #         argocd.argoproj.io/type: helm
+#       annotations:
+#         argocd-image-updater.argoproj.io/chart-name: '{{ .chart }}'
+#         argocd-image-updater.argoproj.io/chart-repo-url: '{{ .repository }}'
+#         argocd-image-updater.argoproj.io/chart-update-strategy: latest
 #       finalizers:
 #         - resources-finalizer.argocd.argoproj.io
 #     spec:
