@@ -17,7 +17,7 @@ spec:
       annotations:
         argocd-image-updater.argoproj.io/chart-name: crossplane
         argocd-image-updater.argoproj.io/chart-repo-url: https://charts.crossplane.io/stable
-        argocd-image-updater.argoproj.io/chart-update-strategy: latest
+        argocd-image-updater.argoproj.io/chart-update-strategy: newest-build
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:

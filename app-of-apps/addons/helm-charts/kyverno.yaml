@@ -17,7 +17,7 @@ spec:
       annotations:
         argocd-image-updater.argoproj.io/chart-name: kyverno
         argocd-image-updater.argoproj.io/chart-repo-url: https://kyverno.github.io/kyverno
-        argocd-image-updater.argoproj.io/chart-update-strategy: latest
+        argocd-image-updater.argoproj.io/chart-update-strategy: newest-build
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:

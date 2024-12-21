@@ -17,7 +17,7 @@ spec:
       annotations:
         argocd-image-updater.argoproj.io/chart-name: kubernetes-dashboard
         argocd-image-updater.argoproj.io/chart-repo-url: https://kubernetes.github.io/dashboard
-        argocd-image-updater.argoproj.io/chart-update-strategy: latest
+        argocd-image-updater.argoproj.io/chart-update-strategy: newest-build
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
