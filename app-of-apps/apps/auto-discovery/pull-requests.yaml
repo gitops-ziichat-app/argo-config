@@ -34,8 +34,12 @@ spec:
                     requeueAfterSeconds: 1800 # TODO: Configure webhook to trigger this
           - clusters:
               selector:
-                matchLabels:
-                  kubernetes.io/environment: sandbox,local # TODO: Remove local
+                matchExpressions:
+                  - key: kubernetes.io/environment
+                    operator: In
+                    values:
+                      - sandbox
+                      - local # TODO: Remove
 
   template:
     metadata:
