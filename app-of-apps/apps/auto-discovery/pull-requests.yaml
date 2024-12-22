@@ -82,6 +82,7 @@ spec:
                     - matches:
                         - headers:
                             - name: x-feature-branch
+                              type: Exact
                               value: '{{ .branch_slug }}'
                       backendRefs:
                         - group: ''
