@@ -74,10 +74,11 @@ spec:
           components:
             - '../../components/routes'
           patches:
-            - target:
+            - patch: |-
+                apiVersion: gateway.networking.k8s.io/v1
                 kind: GRPCRoute
-                name: '{{ regexReplaceAll "-deployment$" .repository "" }}-route'
-              patch: |-
+                metadata
+                  name: '{{ regexReplaceAll "-deployment$" .repository "" }}-route'
                 spec:
                   rules:
                     - matches:
