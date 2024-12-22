@@ -71,25 +71,25 @@ spec:
           nameSuffix: '-pr{{ .number }}'
           images:
             - 'ghcr.io/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}:{{ .head_sha }}'
-          patches:
-            - patch: |-
-                apiVersion: gateway.networking.k8s.io/v1
-                kind: GRPCRoute
-                metadata:
-                  name: '{{ regexReplaceAll "-deployment$" .repository "" }}-route'
-                spec:
-                  rules:
-                    - matches:
-                        - headers:
-                            - name: x-feature-branch
-                              type: Exact
-                              value: '{{ .branch_slug }}'
-                      backendRefs:
-                        - group: ''
-                          kind: Service
-                          name: '{{ regexReplaceAll "-deployment$" .repository "" }}-pr{{ .number }}'
-                          port: 50051
-                          weight: 1
+          components:
+            - |-
+              apiVersion: gateway.networking.k8s.io/v1
+              kind: GRPCRoute
+              metadata:
+                name: '{{ regexReplaceAll "-deployment$" .repository "" }}-route'
+              spec:
+                rules:
+                  - matches:
+                      - headers:
+                          - name: x-feature-branch
+                            type: Exact
+                            value: '{{ .branch_slug }}'
+                    backendRefs:
+                      - group: ''
+                        kind: Service
+                        name: '{{ regexReplaceAll "-deployment$" .repository "" }}-pr{{ .number }}'
+                        port: 50051
+                        weight: 1
       destination:
         name: '{{ .name }}'
         namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
