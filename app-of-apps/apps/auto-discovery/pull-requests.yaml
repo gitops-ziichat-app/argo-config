@@ -71,14 +71,11 @@ spec:
           nameSuffix: '-pr{{ .number }}'
           images:
             - 'ghcr.io/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}:{{ .head_sha }}'
-          components:
-            - '../../components/routes'
           patches:
-            - patch: |-
-                apiVersion: gateway.networking.k8s.io/v1
+            - target:
                 kind: GRPCRoute
-                metadata
-                  name: '{{ regexReplaceAll "-deployment$" .repository "" }}-route'
+                name: '{{ regexReplaceAll "-deployment$" .repository "" }}-route-pr{{ .number }}'
+              patch: |-
                 spec:
                   rules:
                     - matches:
