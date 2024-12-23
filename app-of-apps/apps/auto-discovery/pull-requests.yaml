@@ -77,10 +77,10 @@ spec:
                 name: '{{ regexReplaceAll "-deployment$" .repository "" }}-route'
               patch: |-
                 - op: add
-                  path: /spec/rules/0/matches/0/headers/0/name
+                  path: /spec/rules/0/matches/0/headers/-/name
                   value: x-feature-branch
                 - op: add
-                  path: /spec/rules/0/matches/0/headers/0/value
+                  path: /spec/rules/0/matches/0/headers/-/value
                   value: '{{ .branch_slug }}'
       destination:
         name: '{{ .name }}'
