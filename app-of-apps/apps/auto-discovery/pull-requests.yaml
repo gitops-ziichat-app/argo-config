@@ -71,8 +71,6 @@ spec:
           nameSuffix: '-pr{{ .number }}'
           images:
             - 'ghcr.io/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}:{{ .head_sha }}'
-          components:
-            - '../../components/routes'
           patches:
             - patch: |-
                 apiVersion: gateway.networking.k8s.io/v1
