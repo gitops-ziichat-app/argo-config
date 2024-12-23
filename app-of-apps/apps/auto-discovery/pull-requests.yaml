@@ -77,8 +77,10 @@ spec:
                 name: '{{ regexReplaceAll "-deployment$" .repository "" }}-route'
               patch: |-
                 - op: add
-                  path: /spec/rules/0/matches/0/headers/values/x-subdomain
-                  value: '{{ .branch_slug }}'
+                  path: /spec/rules/0/matches/0/headers
+                  value:
+                    values:
+                      x-subdomain: '{{ .branch_slug }}'
                 - op: replace
                   path: /spec/rules/0/backendRefs/0/name
                   value: '{{ regexReplaceAll "-deployment$" .repository "" }}-pr{{ .number }}'
