@@ -88,6 +88,26 @@ spec:
                 - op: replace
                   path: /spec/rules/0/backendRefs/0/name
                   value: '{{ regexReplaceAll "-deployment$" .repository "" }}-pr{{ .number }}'
+            - target:
+                kind: Service
+                name: '{{ regexReplaceAll "-deployment$" .repository "" }}'
+              patch: |-
+                - op: replace
+                  path: /spec/selector/app
+                  value: '{{ regexReplaceAll "-deployment$" .repository "" }}-pr{{ .number }}'
+            - target:
+                kind: Deployment
+                name: '{{ regexReplaceAll "-deployment$" .repository "" }}'
+              patch: |-
+                - op: replace
+                  path: /metadata/labels/app
+                  value: '{{ regexReplaceAll "-deployment$" .repository "" }}-pr{{ .number }}'
+                - op: replace
+                  path: /spec/selector/matchLabels/app
+                  value: '{{ regexReplaceAll "-deployment$" .repository "" }}-pr{{ .number }}'
+                - op: replace
+                  path: /spec/template/metadata/labels/app
+                  value: '{{ regexReplaceAll "-deployment$" .repository "" }}-pr{{ .number }}'
       destination:
         name: '{{ .name }}'
         namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
