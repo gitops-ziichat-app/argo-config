@@ -82,7 +82,7 @@ spec:
                 - op: add
                   path: /spec/rules/0/matches/0/headers/-
                   value:
-                    name: x-feature-branch
+                    name: x-subdomain
                     type: Exact
                     value: '{{ .branch_slug }}'
                 - op: replace
