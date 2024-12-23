@@ -77,11 +77,13 @@ spec:
                 name: '{{ regexReplaceAll "-deployment$" .repository "" }}-route'
               patch: |-
                 - op: add
-                  path: /spec/rules/0/matches/0/headers/-/name
-                  value: x-feature-branch
+                  path: /spec/rules/0/matches/0/headers
+                  value: []
                 - op: add
-                  path: /spec/rules/0/matches/0/headers/-/value
-                  value: '{{ .branch_slug }}'
+                  path: /spec/rules/0/matches/0/headers/-
+                  value:
+                    name: x-feature-branch
+                    value: '{{ .branch_slug }}'
       destination:
         name: '{{ .name }}'
         namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
