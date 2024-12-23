@@ -85,6 +85,9 @@ spec:
                     name: x-feature-branch
                     type: Exact
                     value: '{{ .branch_slug }}'
+                - op: replace
+                  path: /spec/rules/0/backendRefs/0/name
+                  value: '{{ regexReplaceAll "-deployment$" .repository "" }}-pr{{ .number }}'
       destination:
         name: '{{ .name }}'
         namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
