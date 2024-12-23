@@ -76,7 +76,7 @@ spec:
                 apiVersion: gateway.networking.k8s.io/v1
                 kind: GRPCRoute
                 metadata
-                  name: '{{ regexReplaceAll "-deployment$" .repository "" }}-route-pr{{ .number }}'
+                  name: '{{ regexReplaceAll "-deployment$" .repository "" }}-route'
                 spec:
                   rules:
                     - matches:
