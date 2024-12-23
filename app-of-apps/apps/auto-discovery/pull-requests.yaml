@@ -83,6 +83,7 @@ spec:
                   path: /spec/rules/0/matches/0/headers/-
                   value:
                     name: x-feature-branch
+                    type: Exact
                     value: '{{ .branch_slug }}'
       destination:
         name: '{{ .name }}'
