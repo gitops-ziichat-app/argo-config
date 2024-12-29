@@ -14,4 +14,7 @@ data:
   resource.customizations.ignoreDifferences.apiextensions.crossplane.io_CompositeResourceDefinition: |
     jqPathExpressions:
       - '.spec.versions[]?.defaultCompositionRef'
+  resource.customizations.ignoreDifferences.apiextensions.admissionregistration.k8s.io_ValidatingWebhookConfiguration: |
+    jqPathExpressions:
+      - '.webhooks[]?.failurePolicy'
   application.resourceTrackingMethod: annotation
