@@ -17,4 +17,7 @@ data:
   resource.customizations.ignoreDifferences.admissionregistration.k8s.io_ValidatingWebhookConfiguration: |
     jqPathExpressions:
       - '.webhooks[]?.failurePolicy'
+  resource.customizations.ignoreDifferences.apps/v1_Deployment: |
+    jqPathExpressions:
+      - '.spec.template.spec.containers[]?.env'
   application.resourceTrackingMethod: annotation
