@@ -46,10 +46,3 @@ The [app-of-apps](./app-of-apps/) directory contains the configuration for the A
 See [addons](./app-of-apps/addons/) to enable additional functionality for Kubernetes clusters. All clusters managed by Argo CD will have these addons installed.
 
 See [apps](./app-of-apps/apps/) to deploy User-space applications to Kubernetes clusters.
-
-### Secrets
-
-Argo CD will be polling repositories for changes. We need to create a secret to allow Argo CD to authenticate with GitHub to bypass rate limits:
-
-```sh
-kubectl create secret generic github-token --from-literal=token="github_pat_XXX" -n argocd

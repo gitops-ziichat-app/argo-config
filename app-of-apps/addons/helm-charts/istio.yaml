@@ -1,0 +1,60 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: addons-istio
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - matrix:
+        generators:
+          - list:
+              elements:
+                - chart: base
+                  namespace: istio-system
+                - chart: istiod
+                  namespace: istio-system
+                - chart: gateway
+                  namespace: istio-ingress
+          - clusters: {}
+  template:
+    metadata:
+      name: 'istio-{{ .chart }}-addon-chart-{{ .name }}'
+      labels:
+        argocd.argoproj.io/type: helm
+      annotations:
+        argocd-image-updater.argoproj.io/chart-name: '{{ .chart }}'
+        argocd-image-updater.argoproj.io/chart-repo-url: https://istio-release.storage.googleapis.com/charts
+        argocd-image-updater.argoproj.io/chart-update-strategy: newest-build
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: addons
+      sources:
+        - chart: '{{ .chart }}'
+          targetRevision: 1.24.2
+          repoURL: https://istio-release.storage.googleapis.com/charts
+          helm:
+            ignoreMissingValueFiles: true
+            valueFiles:
+              - '$values/app-of-apps/addons/helm-charts/istio/{{ .chart }}/values.yaml'
+              - '$values/app-of-apps/addons/helm-charts/istio/{{ .chart }}/{{ index .metadata.labels "kubernetes.io/environment" }}.values.yaml'
+            valuesObject: {}
+        - repoURL: https://github.com/gitops-ci-cd/argo-config
+          targetRevision: HEAD
+          ref: values
+      destination:
+        name: '{{ .name }}'
+        namespace: '{{ .namespace }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        managedNamespaceMetadata:
+          labels: {}
+          annotations: {}
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true

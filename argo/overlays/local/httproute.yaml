@@ -7,7 +7,7 @@ metadata:
 spec:
   parentRefs:
     - name: external-http-gateway
-      namespace: traefik
+      namespace: istio-ingress
   hostnames:
     - "argo.localhost"
   rules:
