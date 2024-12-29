@@ -1,2 +1,3 @@
 # https://github.com/istio/istio/blob/master/manifests/charts/gateway/values.yaml
 ---
+type: ClusterIP
