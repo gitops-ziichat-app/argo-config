@@ -73,7 +73,7 @@ spec:
             - 'ghcr.io/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}:{{ .head_sha }}'
           patches:
             - target:
-                kind: GRPCRoute
+                # kind: We can't use kind here because the target may be an HTTPRoute or a GRPCRoute
                 name: '{{ regexReplaceAll "-deployment$" .repository "" }}-route'
               patch: |-
                 - op: add
