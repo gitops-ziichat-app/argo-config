@@ -121,7 +121,8 @@ spec:
           prune: true
           selfHeal: true
         managedNamespaceMetadata:
-          labels: {}
+          labels:
+            istio-injection: enabled
           annotations: {}
         syncOptions:
           - CreateNamespace=true
