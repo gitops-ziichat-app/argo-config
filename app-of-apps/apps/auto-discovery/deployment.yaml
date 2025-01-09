@@ -39,6 +39,12 @@ spec:
       annotations:
         argocd-image-updater.argoproj.io/image-list: 'app=ghcr.io/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}:latest'
         argocd-image-updater.argoproj.io/app.update-strategy: newest-build
+        notifications.argoproj.io/subscribe.sync-operation-change.github: ""
+        notifications.argoproj.io/subscribe.on-deleted.github: ""
+        github.com/owner: '{{ .organization }}'
+        github.com/repo: '{{ regexReplaceAll "-deployment$" .repository "" }}'
+        github.com/environment: '{{ .path.basename }}'
+        github.com/ref: '{{ .sha }}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
