@@ -40,6 +40,8 @@ data:
               "environment_url": "https://{{ index .app.metadata.annotations "github.com/branch-slug" }}.sandbox.acme.com",
               {{ else if eq (index .app.metadata.annotations "github.com/environment") "sandbox" }}
               "environment_url": "https://sandbox.acme.com",
+              {{ else if eq (index .app.metadata.annotations "github.com/environment") "local" }}
+              "environment_url": "http://sandbox.acme-node.localhost/",
               {{ else }}
               "environment_url": "https://acme.com",
               {{ end }}

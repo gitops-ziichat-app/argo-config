@@ -27,6 +27,8 @@ spec:
                     revision: HEAD
                     files:
                       - path: 'overlays/**/kustomization.yaml'
+                    values:
+                      sha: '{{ .sha }}'
           - clusters:
               selector:
                 matchLabels:
@@ -44,7 +46,7 @@ spec:
         github.com/owner: '{{ .organization }}'
         github.com/repo: '{{ regexReplaceAll "-deployment$" .repository "" }}'
         github.com/environment: '{{ .path.basename }}'
-        github.com/ref: '{{ .sha }}'
+        github.com/ref: '{{ .values.sha }}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
