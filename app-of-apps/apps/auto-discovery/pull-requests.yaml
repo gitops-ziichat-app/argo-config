@@ -57,7 +57,7 @@ spec:
         github.com/target-branch-slug: '{{ .target_branch_slug }}'
         github.com/branch: '{{ .branch }}'
         github.com/branch-slug: '{{ .branch_slug }}'
-        github.com/ref: 'verify_repo_dispatch'
+        github.com/ref: '{{ .branch_slug }}' # TODO: Use '{{ .pr_branch }}' once https://github.com/argoproj/argo-cd/pull/21110 is available
         github.com/author: '{{ .author }}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
