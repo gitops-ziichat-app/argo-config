@@ -52,8 +52,8 @@ data:
 
   trigger.sync-operation-change: |
     - description: Application is synced and healthy. Triggered once per commit.
-      when: app.status.operationState != nil and app.status.operationState.phase in ['Succeeded'] and app.status.health.status in ['Healthy']
-      oncePer: app.status.operationState?.syncResult?.revision
+      when: app.status.operationState != nil and app.status.operationState.phase in ['Succeeded'] and app.status.health != nil and app.status.health.status == 'Healthy'
+      oncePer: app.status.sync.revision
       send:
         - github-deployment-status
     - description: Application is being synced
