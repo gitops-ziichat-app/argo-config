@@ -27,26 +27,32 @@ spec:
                     revision: HEAD
                     files:
                       - path: 'overlays/**/kustomization.yaml'
-                    values:
-                      sha: '{{ .sha }}'
           - clusters:
               selector:
                 matchLabels:
                   kubernetes.io/environment: '{{ .path.basename }}'
+    - scmProvider:
+        github:
+          organization: gitops-ci-cd
+          tokenRef:
+            secretName: github-token
+            key: token
+        filters:
+          - repositoryMatch: '{{ regexReplaceAll "-deployment$" .repository "" }}'
   template:
     metadata:
-      name: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .name }}'
+      name: '{{ .repository }}-{{ .name }}'
       labels:
         argocd.argoproj.io/type: directory
       annotations:
-        argocd-image-updater.argoproj.io/image-list: 'app=ghcr.io/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}:latest'
+        argocd-image-updater.argoproj.io/image-list: 'app=ghcr.io/{{ .organization }}/{{ .repository }}:latest'
         argocd-image-updater.argoproj.io/app.update-strategy: newest-build
         notifications.argoproj.io/subscribe.sync-operation-change.github: ""
         notifications.argoproj.io/subscribe.on-deleted.github: ""
         github.com/owner: '{{ .organization }}'
-        github.com/repo: '{{ regexReplaceAll "-deployment$" .repository "" }}'
+        github.com/repo: '{{ .repository }}'
         github.com/environment: '{{ .path.basename }}'
-        github.com/ref: '{{ .values.sha }}'
+        github.com/ref: '{{ .sha }}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
@@ -54,15 +60,15 @@ spec:
       source:
         repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}'
         targetRevision: HEAD
-        path: 'overlays/{{ index .metadata.labels "kubernetes.io/environment" }}'
+        path: 'overlays/{{ .path.basename }}'
       destination:
         name: '{{ .name }}'
-        namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
+        namespace: '{{ .repository }}-{{ .path.basename }}'
       info:
         - name: 'App Repository'
-          value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}'
+          value: 'https://github.com/{{ .organization }}/{{ .repository }}'
         - name: 'Environment Manifests'
-          value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/{{ index .metadata.labels "kubernetes.io/environment" }}'
+          value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/{{ .path.basename }}'
       syncPolicy:
         automated:
           prune: true
