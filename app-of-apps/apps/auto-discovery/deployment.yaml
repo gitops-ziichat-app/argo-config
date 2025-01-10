@@ -31,26 +31,18 @@ spec:
               selector:
                 matchLabels:
                   kubernetes.io/environment: '{{ .path.basename }}'
-    - scmProvider:
-        github:
-          organization: gitops-ci-cd
-          tokenRef:
-            secretName: github-token
-            key: token
-        filters:
-          - repositoryMatch: '{{ regexReplaceAll "-deployment$" .repository "" }}'
   template:
     metadata:
-      name: '{{ .repository }}-{{ .name }}'
+      name: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .name }}'
       labels:
         argocd.argoproj.io/type: directory
       annotations:
-        argocd-image-updater.argoproj.io/image-list: 'app=ghcr.io/{{ .organization }}/{{ .repository }}:latest'
+        argocd-image-updater.argoproj.io/image-list: 'app=ghcr.io/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}:latest'
         argocd-image-updater.argoproj.io/app.update-strategy: newest-build
         notifications.argoproj.io/subscribe.sync-operation-change.github: ""
         notifications.argoproj.io/subscribe.on-deleted.github: ""
         github.com/owner: '{{ .organization }}'
-        github.com/repo: '{{ .repository }}'
+        github.com/repo: '{{ regexReplaceAll "-deployment$" .repository "" }}'
         github.com/environment: '{{ .path.basename }}'
         github.com/ref: '{{ .sha }}'
       finalizers:
@@ -63,10 +55,10 @@ spec:
         path: 'overlays/{{ .path.basename }}'
       destination:
         name: '{{ .name }}'
-        namespace: '{{ .repository }}-{{ .path.basename }}'
+        namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .path.basename }}'
       info:
         - name: 'App Repository'
-          value: 'https://github.com/{{ .organization }}/{{ .repository }}'
+          value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}'
         - name: 'Environment Manifests'
           value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/{{ .path.basename }}'
       syncPolicy:
