@@ -47,7 +47,7 @@ data:
               {{ end }}
 
               {{- range .app.status.summary.images -}}
-                {{- if (contains . (index .app.metadata.annotations "github.com/repo")) -}}
+                {{- if (contains . (index $.app.metadata.annotations "github.com/repo")) -}}
                   "ref": "{{ index (splitList ":" .) 1 }}",
                 {{- end -}}
               {{- end -}}
