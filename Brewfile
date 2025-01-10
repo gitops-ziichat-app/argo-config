@@ -2,4 +2,5 @@
 
 brew "argo"
 brew "k9s"
+brew "kubectx"
 brew "istioctl"
