@@ -46,7 +46,11 @@ data:
               "environment_url": "https://acme.com",
               {{ end }}
 
-              "ref": "{{ index .app.metadata.annotations "github.com/ref" }}",
+              {{- range .app.status.summary.images -}}
+                {{- if (has (index .app.metadata.annotations "github.com/repo") .) -}}
+                  "ref": "{{ index (splitList ":" .) 1 }}",
+                {{- end -}}
+              {{- end -}}
               "environment": "{{ index .app.metadata.annotations "github.com/environment" }}",
               "log_url": "{{ .context.argocdUrl }}/applications/{{ .app.metadata.name }}"
             }
