@@ -58,15 +58,15 @@ data:
 
   trigger.sync-operation-change: |
     - description: Application is synced and healthy. Triggered once per commit.
-      when: app.status.operationState != nil and app.status.operationState.phase in ['Succeeded'] and app.status.health != nil and app.status.health.status == 'Healthy' and app.status.summary.images != nil and gt (len .app.status.summary.images) 0
+      when: app.status.operationState != nil and app.status.operationState.phase in ['Succeeded'] and app.status.health != nil and app.status.health.status == 'Healthy' and app.status.summary.images != nil and (gt (len .app.status.summary.images) 0)
       send:
         - github-deployment-status
     - description: Application is being synced
-      when: app.status.operationState != nil and app.status.operationState.phase in ['Running'] and app.status.summary.images != nil and gt (len .app.status.summary.images) 0
+      when: app.status.operationState != nil and app.status.operationState.phase in ['Running'] and app.status.summary.images != nil and (gt (len .app.status.summary.images) 0)
       send:
         - github-deployment-status
     - description: Application syncing has failed
-      when: app.status.operationState != nil and app.status.operationState.phase in ['Error', 'Failed'] and app.status.summary.images != nil and gt (len .app.status.summary.images) 0
+      when: app.status.operationState != nil and app.status.operationState.phase in ['Error', 'Failed'] and app.status.summary.images != nil and (gt (len .app.status.summary.images) 0)
       send:
         - github-deployment-status
   trigger.on-created: |
