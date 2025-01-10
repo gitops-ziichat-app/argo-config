@@ -47,13 +47,8 @@ data:
               {{ end }}
 
               {{- range .app.status.summary.images -}}
-                {{- printf "Checking image: %s" . | log -}}
-                {{- printf "Checking repository: %s" (index $.app.metadata.annotations "github.com/repo") | log -}}
-                {{- if (contains . (index $.app.metadata.annotations "github.com/repo")) -}}
+                {{- if (contains (index $.app.metadata.annotations "github.com/repo") .) -}}
                   "ref": "{{ index (splitList ":" .) 1 }}",
-                {{- else -}}
-                  {{- printf "Image '%s' does not contain repository '%s'" . (index $.app.metadata.annotations "github.com/repo") | log -}}
-                {{- end -}}
                 {{- end -}}
               {{- end -}}
               "environment": "{{ index .app.metadata.annotations "github.com/environment" }}",
