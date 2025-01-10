@@ -58,15 +58,15 @@ data:
 
   trigger.sync-operation-change: |
     - description: Application is synced and healthy. Triggered once per commit.
-      when: app.status.operationState != nil and app.status.operationState.phase in ['Succeeded'] and app.status.health != nil and app.status.health.status == 'Healthy' and (len app.status.summary.images) gt 0
+      when: app.status.operationState != nil and app.status.operationState.phase in ['Succeeded'] and app.status.health != nil and app.status.health.status == 'Healthy' and len(app.status.summary.images) gt 0
       send:
         - github-deployment-status
     - description: Application is being synced
-      when: app.status.operationState != nil and app.status.operationState.phase in ['Running'] and (len app.status.summary.images) gt 0
+      when: app.status.operationState != nil and app.status.operationState.phase in ['Running'] and len(app.status.summary.images) gt 0
       send:
         - github-deployment-status
     - description: Application syncing has failed
-      when: app.status.operationState != nil and app.status.operationState.phase in ['Error', 'Failed'] and (len app.status.summary.images) gt 0
+      when: app.status.operationState != nil and app.status.operationState.phase in ['Error', 'Failed'] and len(app.status.summary.images) gt 0
       send:
         - github-deployment-status
   trigger.on-created: |
