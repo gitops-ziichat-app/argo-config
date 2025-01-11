@@ -41,7 +41,7 @@ data:
               {{ else if eq (index .app.metadata.annotations "github.com/environment") "sandbox" }}
               "environment_url": "https://sandbox.acme.com",
               {{ else if eq (index .app.metadata.annotations "github.com/environment") "local" }}
-              "environment_url": "http://sandbox.acme-node.localhost/",
+              "environment_url": "http://sandbox.acme-node.localhost/api/v1/hello",
               {{ else }}
               "environment_url": "https://acme.com",
               {{ end }}
