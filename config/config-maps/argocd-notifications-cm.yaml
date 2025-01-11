@@ -24,33 +24,37 @@ data:
           {
             "event_type": "sync-deployment-status",
             "client_payload": {
-              {{ if .app.metadata.deletionTimestamp }}
+              {{- if .app.metadata.deletionTimestamp -}}
               "state": "inactive",
-              {{ else if eq .app.status.operationState.phase "Running" }}
+              {{- else if eq .app.status.operationState.phase "Running" -}}
               "state": "in_progress",
-              {{ else if eq .app.status.operationState.phase "Succeeded" }}
+              {{- else if eq .app.status.operationState.phase "Succeeded" -}}
               "state": "success",
-              {{ else if eq .app.status.operationState.phase "Error" }}
+              {{- else if eq .app.status.operationState.phase "Error" -}}
               "state": "error",
-              {{ else }}
+              {{- else -}}
               "state": "failure",
-              {{ end }}
+              {{- end -}}
 
-              {{ if eq (index .app.metadata.annotations "github.com/environment") "preview" }}
+              {{- if eq (index .app.metadata.annotations "github.com/environment") "preview" -}}
               "environment_url": "https://{{ index .app.metadata.annotations "github.com/branch-slug" }}.sandbox.acme.com",
-              {{ else if eq (index .app.metadata.annotations "github.com/environment") "sandbox" }}
+              {{- else if eq (index .app.metadata.annotations "github.com/environment") "sandbox" -}}
               "environment_url": "https://sandbox.acme.com",
-              {{ else if eq (index .app.metadata.annotations "github.com/environment") "local" }}
+              {{- else if eq (index .app.metadata.annotations "github.com/environment") "local" -}}
               "environment_url": "http://sandbox.acme-node.localhost/api/v1/hello",
-              {{ else }}
+              {{- else -}}
               "environment_url": "https://acme.com",
-              {{ end }}
+              {{- end -}}
 
+              {{- if index .app.metadata.annotations "github.com/ref" -}}
+              "ref": "{{ index .app.metadata.annotations "github.com/ref" }}",
+              {{- else -}}
               {{- range .app.status.summary.images -}}
                 {{- if (contains (index $.app.metadata.annotations "github.com/repo") .) -}}
                   "ref": "{{ index (splitList ":" .) 1 }}",
                 {{- end -}}
               {{- end -}}
+
               "environment": "{{ index .app.metadata.annotations "github.com/environment" }}",
               "log_url": "{{ .context.argocdUrl }}/applications/{{ .app.metadata.name }}"
             }
