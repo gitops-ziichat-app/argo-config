@@ -37,7 +37,7 @@ data:
               {{- end -}}
 
               {{- if eq (index .app.metadata.annotations "github.com/environment") "preview" -}}
-              "environment_url": "https://{{ index .app.metadata.annotations "github.com/branch-slug" }}.sandbox.acme.com",
+              "environment_url": "http://{{ index .app.metadata.annotations "github.com/branch-slug" }}.acme-node.localhost/api/v1/hello",
               {{- else if eq (index .app.metadata.annotations "github.com/environment") "sandbox" -}}
               "environment_url": "https://sandbox.acme.com",
               {{- else if eq (index .app.metadata.annotations "github.com/environment") "local" -}}
