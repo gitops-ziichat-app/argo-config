@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: apps-pull-requests
+  name: apps-preview
   namespace: argocd
 spec:
   goTemplate: true
@@ -112,9 +112,9 @@ spec:
         name: '{{ .name }}'
         namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
       info:
-        - name: 'Pull Request'
+        - name: Pull Request
           value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}/pull/{{ .number }}'
-        - name: 'Environment Manifests'
+        - name: Environment Manifests
           value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/preview'
       syncPolicy:
         automated:
