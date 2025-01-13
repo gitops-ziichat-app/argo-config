@@ -38,6 +38,10 @@ spec:
         argocd.argoproj.io/type: directory
       annotations:
         argocd-image-updater.argoproj.io/image-list: 'app=ghcr.io/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}:latest'
+        argocd-image-updater.argoproj.io/app.kustomize.image-name: 'ghcr.io/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}'
+        argocd-image-updater.argoproj.io/app.git-branch: main
+        argocd-image-updater.argoproj.io/app.write-back-method: git
+        argocd-image-updater.argoproj.io/app.write-back-target: "kustomization:../../base"
         argocd-image-updater.argoproj.io/app.update-strategy: newest-build
         notifications.argoproj.io/subscribe.sync-operation-change.github: ""
         notifications.argoproj.io/subscribe.on-deleted.github: ""

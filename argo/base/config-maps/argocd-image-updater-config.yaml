@@ -4,6 +4,7 @@ kind: ConfigMap
 metadata:
   name: argocd-image-updater-config
 data:
+  log.level: info
   registries.conf: |
     registries:
       - name: GHCR
@@ -11,13 +12,9 @@ data:
         api_url: https://ghcr.io
         default: true
         credentials: pullsecret:argocd/github-registry
+  # git.commit-message-template: |
+  #   build: automatic update of {{ .AppName }}
 
-  config.yaml: |
-    git:
-      write_back_method: git
-      default_branch: main
-      git_provider: github
-      github:
-        tokenSecret:
-          name: github-token
-          key: token
+  #   {{ range .AppChanges -}}
+  #   updates image {{ .Image }} tag '{{ .OldTag }}' to '{{ .NewTag }}'
+  #   {{ end -}}

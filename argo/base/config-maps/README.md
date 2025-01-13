@@ -18,4 +18,5 @@ Notable configurations for the project.
 
 ## argocd-image-updater-config
 
+- <https://argocd-image-updater.readthedocs.io/en/stable/basics/update-methods>
 - <https://argocd-image-updater.readthedocs.io/en/stable/configuration/registries/>
