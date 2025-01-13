@@ -9,8 +9,8 @@ data:
       - name: GHCR
         prefix: ghcr.io
         api_url: https://ghcr.io
-        credentials: secret:argocd/github-token#token
         default: true
+        credentials: pullsecret:argocd/github-registry
 
   config.yaml: |
     git:
