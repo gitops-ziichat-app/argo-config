@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: addons-argocd
+  name: argocd-addon-kustomize-in-cluster-hub
   namespace: argocd
   labels:
     argocd.argoproj.io/type: kustomize

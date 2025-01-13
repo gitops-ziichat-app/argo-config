@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: argocd
 
 patches:
-  - path: ./configmaps/argocd-cmd-params-cm.yaml
-  - path: ./configmaps/argocd-cm.yaml
-  - path: ./configmaps/argocd-image-updater-config.yaml
-  - path: ./configmaps/argocd-notifications-cm.yaml
+  - path: ./config-maps/argocd-cmd-params-cm.yaml
+  - path: ./config-maps/argocd-cm.yaml
+  - path: ./config-maps/argocd-image-updater-config.yaml
+  - path: ./config-maps/argocd-notifications-cm.yaml
