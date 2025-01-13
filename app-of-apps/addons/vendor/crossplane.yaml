@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-kyverno
+  name: addons-crossplane
   namespace: argocd
 spec:
   goTemplate: true
@@ -11,33 +11,33 @@ spec:
     - clusters: {}
   template:
     metadata:
-      name: 'kyverno-addon-chart-{{ .name }}'
+      name: 'crossplane-addon-chart-{{ .name }}'
       labels:
         argocd.argoproj.io/type: helm
       annotations:
-        argocd-image-updater.argoproj.io/chart-name: kyverno
-        argocd-image-updater.argoproj.io/chart-repo-url: https://kyverno.github.io/kyverno
+        argocd-image-updater.argoproj.io/chart-name: crossplane
+        argocd-image-updater.argoproj.io/chart-repo-url: https://charts.crossplane.io/stable
         argocd-image-updater.argoproj.io/chart-update-strategy: newest-build
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
       project: addons
       sources:
-        - chart: kyverno
-          targetRevision: 3.3.3
-          repoURL: https://kyverno.github.io/kyverno
+        - chart: crossplane
+          targetRevision: 1.18.1
+          repoURL: https://charts.crossplane.io/stable
           helm:
             ignoreMissingValueFiles: true
             valueFiles:
-              - '$values/app-of-apps/addons/helm-charts/kyverno/values.yaml'
-              - '$values/app-of-apps/addons/helm-charts/kyverno/{{ index .metadata.labels "kubernetes.io/environment" }}.values.yaml'
+              - '$values/app-of-apps/addons/vendor/crossplane/values.yaml'
+              - '$values/app-of-apps/addons/vendor/crossplane/{{ index .metadata.labels "kubernetes.io/environment" }}.values.yaml'
             valuesObject: {}
         - repoURL: https://github.com/gitops-ci-cd/argo-config
           targetRevision: HEAD
           ref: values
       destination:
         name: '{{ .name }}'
-        namespace: kyverno
+        namespace: crossplane-system
       syncPolicy:
         automated:
           prune: true

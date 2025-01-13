@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-kubernetes-dashboard
+  name: addons-kyverno
   namespace: argocd
 spec:
   goTemplate: true
@@ -11,33 +11,33 @@ spec:
     - clusters: {}
   template:
     metadata:
-      name: 'kubernetes-dashboard-addon-chart-{{ .name }}'
+      name: 'kyverno-addon-chart-{{ .name }}'
       labels:
         argocd.argoproj.io/type: helm
       annotations:
-        argocd-image-updater.argoproj.io/chart-name: kubernetes-dashboard
-        argocd-image-updater.argoproj.io/chart-repo-url: https://kubernetes.github.io/dashboard
+        argocd-image-updater.argoproj.io/chart-name: kyverno
+        argocd-image-updater.argoproj.io/chart-repo-url: https://kyverno.github.io/kyverno
         argocd-image-updater.argoproj.io/chart-update-strategy: newest-build
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
       project: addons
       sources:
-        - chart: kubernetes-dashboard
-          targetRevision: 7.10.0
-          repoURL: https://kubernetes.github.io/dashboard
+        - chart: kyverno
+          targetRevision: 3.3.3
+          repoURL: https://kyverno.github.io/kyverno
           helm:
             ignoreMissingValueFiles: true
             valueFiles:
-              - '$values/app-of-apps/addons/helm-charts/kubernetes-dashboard/values.yaml'
-              - '$values/app-of-apps/addons/helm-charts/kubernetes-dashboard/{{ index .metadata.labels "kubernetes.io/environment" }}.values.yaml'
+              - '$values/app-of-apps/addons/vendor/kyverno/values.yaml'
+              - '$values/app-of-apps/addons/vendor/kyverno/{{ index .metadata.labels "kubernetes.io/environment" }}.values.yaml'
             valuesObject: {}
         - repoURL: https://github.com/gitops-ci-cd/argo-config
           targetRevision: HEAD
           ref: values
       destination:
         name: '{{ .name }}'
-        namespace: kubernetes-dashboard
+        namespace: kyverno
       syncPolicy:
         automated:
           prune: true

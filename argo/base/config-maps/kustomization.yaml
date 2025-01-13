@@ -1,0 +1,10 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: argocd
+
+patches:
+  - path: ./configmaps/argocd-cmd-params-cm.yaml
+  - path: ./configmaps/argocd-cm.yaml
+  - path: ./configmaps/argocd-image-updater-config.yaml
+  - path: ./configmaps/argocd-notifications-cm.yaml

@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: https://github.com/gitops-ci-cd/argo-config.git
       targetRevision: HEAD
-      path: app-of-apps/addons/helm-charts
+      path: app-of-apps/addons/vendor
     - repoURL: https://github.com/gitops-ci-cd/argo-config.git
       targetRevision: HEAD
       path: app-of-apps/addons/auto-discovery

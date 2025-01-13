@@ -45,8 +45,8 @@
 #           helm:
 #             ignoreMissingValueFiles: true
 #             valueFiles:
-#               - '$values/app-of-apps/addons/helm-charts/{{ .chart }}/values.yaml'
-#               - '$values/app-of-apps/addons/helm-charts/{{ .chart }}/{{ index .metadata.labels "kubernetes.io/environment" }}.values.yaml'
+#               - '$values/app-of-apps/addons/vendor/{{ .chart }}/values.yaml'
+#               - '$values/app-of-apps/addons/vendor/{{ .chart }}/{{ index .metadata.labels "kubernetes.io/environment" }}.values.yaml'
 #             valuesObject: {}
 #         - repoURL: https://github.com/gitops-ci-cd/argo-config
 #           targetRevision: HEAD

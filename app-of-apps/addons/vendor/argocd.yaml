@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: addons-argocd
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/type: kustomize
+spec:
+  project: addons
+  source:
+    repoURL: https://github.com/gitops-ci-cd/argo-config
+    targetRevision: HEAD
+    path: argo/overlays/local
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
