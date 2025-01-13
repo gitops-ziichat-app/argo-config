@@ -12,9 +12,9 @@ data:
         api_url: https://ghcr.io
         default: true
         credentials: pullsecret:argocd/github-registry
-  # git.commit-message-template: |
-  #   build: automatic update of {{ .AppName }}
+  git.commit-message-template: |
+    build: automatic update of {{ .AppName }}
 
-  #   {{ range .AppChanges -}}
-  #   updates image {{ .Image }} tag '{{ .OldTag }}' to '{{ .NewTag }}'
-  #   {{ end -}}
+    {{ range .AppChanges -}}
+    updates image {{ .Image }} tag '{{ .OldTag }}' to '{{ .NewTag }}'
+    {{ end -}}
