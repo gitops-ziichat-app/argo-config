@@ -13,8 +13,6 @@ data:
         default: true
         credentials: pullsecret:argocd/github-registry
   git.commit-message-template: |
-    build: automatic update of {{ .AppName }}
-
     {{ range .AppChanges -}}
-    updates image {{ .Image }} tag '{{ .OldTag }}' to '{{ .NewTag }}'
+    Update {{ .Image }} to '{{ .NewTag }}'
     {{ end -}}
