@@ -13,13 +13,10 @@ The [argo](./argo/) directory contains the installation files for Argo CD.
 <https://argo-cd.readthedocs.io/en/stable/getting_started/#1-install-argo-cd>
 
 ```sh
-# Install ArgoCD
+# Install ArgoCD. This same kustomization will be used for ArgoCD to manage itself.
 kubectl apply -k argo/overlays/local
 
-# Instruct ArgoCD to manage itself via GitOps
-kubectl apply -f ./config/application.yaml
-
-# Give ArgoCD an application to manage the rest of the applications via AoA
+# Give ArgoCD a root application to manage the rest of the applications via AoA
 kubectl apply -f ./app-of-apps/application.yaml
 ```
 
