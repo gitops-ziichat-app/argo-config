@@ -1,12 +1,12 @@
 # Auto Discovery
 
-These ApplicationSets are designed to automatically discover and deploy applications.
+These ApplicationSets are designed to automatically discover and deploy applications acting as [Kubernetes Addons](https://kubernetes.io/docs/concepts/cluster-administration/addons/), as well as any other cluster-wide tooling.
 
 ## Usage
 
-- **addon**
+- **suffix**
 
-  This ApplicationSet is responsible for ensuring that kustomize overlays from repositories suffixed with `-addon` are applied to their respective environments. These repositories SHOULD contain kustomizations within
+  This ApplicationSet is responsible for ensuring that kustomize overlays from repositories suffixed with `-addon` are applied to their respective environments. These repositories **SHOULD** contain kustomizations within:
 
   - ./base
   - ./overlays/{environment}

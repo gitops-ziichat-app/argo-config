@@ -1,12 +1,12 @@
 # Auto Discovery
 
-These ApplicationSets are designed to automatically discover and deploy applications.
+These ApplicationSets are designed to automatically discover and deploy applications that pertain to the business.
 
 ## Usage
 
-- **deployment**
+- **suffix**
 
-  This ApplicationSet is responsible for ensuring that kustomize overlays from repositories suffixed with `-deployment` are applied to their respective environments. These repositories SHOULD contain kustomizations within
+  This ApplicationSet is responsible for ensuring that kustomize overlays from repositories suffixed with `-deployment` are applied to their respective environments. These repositories **SHOULD** contain kustomizations within:
 
   - ./base
   - ./overlays/{environment}
@@ -15,7 +15,7 @@ These ApplicationSets are designed to automatically discover and deploy applicat
 
   - kubernetes.io/environment
 
-- **pull-requests**
+- **pull-request**
 
   This ApplicationSet is responsible for deploying PR-specific environments. If a pull request is labeled with <https://github.com/gitops-ci-cd/argo-config/labels/preview>, a transient environment will be created, and a GitHub Deployment tracked.
 
