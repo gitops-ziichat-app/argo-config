@@ -24,7 +24,7 @@ kubectl apply -f ./app-of-apps/application.yaml
 
 ### Configuration
 
-The [argocd](./app-of-apps/addons/vendor/argocd/) directory also contains the configuration for Argo CD.
+The [argocd](./app-of-apps/addons/vendor/argocd/) directory also contains the configuration for Argo CD, itself.
 
 Argo CD applications, projects and settings can be defined declaratively using Kubernetes manifests.
 
