@@ -6,7 +6,9 @@ metadata:
   namespace: argocd
 spec:
   parentRefs:
-    - name: external-http-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: external-http-gateway
       namespace: istio-ingress
   hostnames:
     - "argo.localhost"
@@ -16,5 +18,8 @@ spec:
             type: PathPrefix
             value: "/"
       backendRefs:
-        - name: argocd-server
+        - group: ''
+          kind: Service
+          name: argocd-server
           port: 80
+          weight: 1
