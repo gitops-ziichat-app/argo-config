@@ -1,21 +1,35 @@
 ---
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
-  name: argocd-addon-kustomize-in-cluster-hub
+  name: addons-argocd
   namespace: argocd
-  labels:
-    argocd.argoproj.io/type: kustomize
 spec:
-  project: addons
-  source:
-    repoURL: https://github.com/gitops-ci-cd/argo-config
-    targetRevision: HEAD
-    path: argo/overlays/local
-  destination:
-    name: in-cluster-hub
-    namespace: argocd
-  syncPolicy:
-    automated:
-      selfHeal: true
-      prune: true
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            kubernetes.io/environment: local
+  template:
+    metadata:
+      name: 'argocd-addon-kustomize-{{ .name }}'
+      labels:
+        argocd.argoproj.io/type: kustomize
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: addons
+      source:
+        repoURL: https://github.com/gitops-ci-cd/argo-config
+        targetRevision: HEAD
+        path: 'app-of-apps/addons/vendor/argocd/overlays/{{ index .metadata.labels "kubernetes.io/environment" }}'
+      destination:
+        name: '{{ .name }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - ServerSideApply=true

@@ -6,9 +6,6 @@ metadata:
     app.kubernetes.io/part-of: argocd
   name: argocd-cm
 data:
-  config.yaml: |
-    context:
-      argocdUrl: https://localhost
   kustomize.buildOptions: "--enable-helm"
   resource.customizations.ignoreDifferences.apiextensions.crossplane.io_CompositeResourceDefinition: |
     jqPathExpressions:

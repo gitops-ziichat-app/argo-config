@@ -40,6 +40,7 @@ TODO: Once the cluster is stable and accessible to the internet, we can leverage
 We also need to create a secret to allow Argo CD notifications to call the GitHub API (which updates deployment statuses)
 
 ```sh
+kubectl delete -n argocd secret argocd-notifications-secret
 kubectl create -n argocd secret generic argocd-notifications-secret \
   --from-literal=github-token="github_pat_XXX"
 ```
