@@ -21,7 +21,7 @@ spec:
                     filters:
                       - repositoryMatch: '.+-deployment$'
                         pathsExist:
-                          - overlays/preview/kustomization.yaml
+                          - overlays/sandbox/kustomization.yaml
                 - pullRequest:
                     github:
                       owner: '{{ .organization }}'
@@ -66,7 +66,7 @@ spec:
       source:
         repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}'
         targetRevision: HEAD
-        path: 'overlays/preview'
+        path: 'overlays/sandbox'
         kustomize:
           nameSuffix: '-pr{{ .number }}'
           images:
@@ -95,6 +95,9 @@ spec:
                 - op: replace
                   path: /spec/selector/app
                   value: '{{ regexReplaceAll "-deployment$" .repository "" }}-pr{{ .number }}'
+                - op: add
+                  path: /spec/selector/environment
+                  value: preview
             - target:
                 kind: Deployment
                 name: '{{ regexReplaceAll "-deployment$" .repository "" }}'
@@ -103,19 +106,36 @@ spec:
                   path: /metadata/labels/app
                   value: '{{ regexReplaceAll "-deployment$" .repository "" }}-pr{{ .number }}'
                 - op: replace
+                  path: /metadata/labels/environment
+                  value: preview
+                - op: replace
                   path: /spec/selector/matchLabels/app
                   value: '{{ regexReplaceAll "-deployment$" .repository "" }}-pr{{ .number }}'
                 - op: replace
+                  path: /spec/selector/matchLabels/environment
+                  value: preview
+                - op: replace
                   path: /spec/template/metadata/labels/app
                   value: '{{ regexReplaceAll "-deployment$" .repository "" }}-pr{{ .number }}'
+                - op: replace
+                  path: /spec/template/metadata/labels/environment
+                  value: preview
+                - op: test
+                  path: /spec/template/spec/containers/0/name
+                  value: app
+                - op: add
+                  path: /spec/template/spec/containers/0/env/-
+                  value:
+                    name: LOG_LEVEL
+                    value: DEBUG
       destination:
         name: '{{ .name }}'
         namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ index .metadata.labels "kubernetes.io/environment" }}'
       info:
         - name: Pull Request
           value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}/pull/{{ .number }}'
-        - name: Environment Manifests
-          value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/preview'
+        - name: Sandbox Manifests
+          value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/sandbox'
       syncPolicy:
         automated:
           prune: true
