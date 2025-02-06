@@ -53,6 +53,7 @@ data:
                   "ref": "{{ index (splitList ":" .) 1 }}",
                 {{- end -}}
               {{- end -}}
+              {{- end -}}
 
               "environment": "{{ index .app.metadata.annotations "github.com/environment" }}",
               "log_url": "{{ .context.argocdUrl }}/applications/{{ .app.metadata.name }}"
