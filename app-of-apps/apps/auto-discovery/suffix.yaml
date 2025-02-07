@@ -46,6 +46,7 @@ spec:
         argocd-image-updater.argoproj.io/app.allow-tags: regexp:^[0-9a-f]{40}$
         notifications.argoproj.io/subscribe.sync-operation-change.github: ""
         notifications.argoproj.io/subscribe.on-deleted.github: ""
+        github.com/ref: main
         github.com/owner: '{{ .organization }}'
         github.com/repo: '{{ regexReplaceAll "-deployment$" .repository "" }}'
         github.com/environment: '{{ .path.basename }}'
