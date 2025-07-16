@@ -1,2 +1,52 @@
 # https://github.com/istio/istio/blob/master/manifests/charts/istio-control/istio-discovery/values.yaml
 ---
+meshConfig:
+  accessLogFile: /dev/stdout
+  defaultConfig:
+    discoveryAddress: istiod.istio-system.svc:15012
+  #   tracing:
+  #     sampling: 100
+  #     zipkin:
+  #       address: jaeger-collector.istio-system.svc.cluster.local:9411
+  # defaultProviders:
+  #   metrics:
+  #     - prometheus
+  #   tracing:
+  #     - jaeger
+  # enablePrometheusMerge: true
+  # enableTracing: true
+  extensionProviders:
+    - name: jaeger
+      opentelemetry:
+        port: 4317
+        service: otel-collector-opentelemetry-collector.observability.svc.cluster.local
+    - name: oathkeeper-authz-http
+      envoyExtAuthzGrpc:
+        service: commands-oathkeeper.commands.svc.cluster.local
+        port: 3000
+        includeRequestBodyInCheck:
+          maxRequestBytes: "1048576"
+          allowPartialMessage: true
+          packAsBytes: true
+    - name: file-keeper
+      envoyExtAuthzHttp:
+        service: file-keeper.file-store.svc.cluster.local
+        port: "3000"
+        includeRequestHeadersInCheck:
+          - x-session-token
+          - x-forwarded-for
+        headersToUpstreamOnAllow:
+          - x-user-id
+          - x-folder-path
+          - x-source
+          - x-user-permission
+          - x-resume-upload-id
+          - x-country-code
+        includeRequestBodyInCheck:
+          maxRequestBytes: "1048576"
+          allowPartialMessage: true
+          packAsBytes: true
+  ingressSelector: ingress
+  ingressService: istio-ingress
+  rootNamespace: istio-system
+  trustDomain: cluster.local
