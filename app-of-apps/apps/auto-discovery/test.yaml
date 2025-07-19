@@ -57,7 +57,7 @@ spec:
       source:
         repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}'
         targetRevision: HEAD
-        path: 'overlays/{{ .path.basename }}'
+        path: 'overlays/{{ .path.basename }}/'
       destination:
         name: '{{ .name }}'
         namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .path.basename }}'
