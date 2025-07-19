@@ -65,7 +65,7 @@ spec:
         - name: 'App Repository'
           value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-ci-config$" .repository "" }}'
         - name: 'Environment Manifests'
-          value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/{{ .path.basename }}'
+          value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/{{ .path.basename }}/'
       syncPolicy:
         automated:
           prune: true
