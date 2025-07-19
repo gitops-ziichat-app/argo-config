@@ -19,8 +19,7 @@ spec:
                         secretName: github-token
                         key: token
                     filters:
-                      - repositoryMatch: 'kro-example-config'
-
+                      - repositoryMatch: '.+-config$'
                         pathsExist:
                           - base/kustomization.yaml
                 - git:
@@ -61,7 +60,7 @@ spec:
         path: 'overlays/{{ .path.basename }}'
       destination:
         name: '{{ .name }}'
-        namespace: default   #'{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .path.basename }}'
+        namespace: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .path.basename }}'
       info:
         - name: 'App Repository'
           value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}'
@@ -72,8 +71,8 @@ spec:
           prune: true
           selfHeal: true
         managedNamespaceMetadata:
-          # labels:
-          #   istio-injection: enabled
+          labels:
+            istio-injection: enabled
           annotations: {}
         syncOptions:
           - CreateNamespace=true
