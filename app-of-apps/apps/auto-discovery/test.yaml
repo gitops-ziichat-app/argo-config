@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: apps-auto-discovery-suffix
+  name: apps-auto-test
   namespace: argocd
 spec:
   goTemplate: true
@@ -19,7 +19,7 @@ spec:
                         secretName: github-token
                         key: token
                     filters:
-                      - repositoryMatch: 'ziichat-devops-demo-ci-config'
+                      - repositoryMatch: '-config$'
                         pathsExist:
                           - base/kustomization.yaml
                 - git:
