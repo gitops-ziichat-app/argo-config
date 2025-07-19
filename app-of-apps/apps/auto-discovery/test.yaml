@@ -21,7 +21,7 @@ spec:
                     filters:
                       - repositoryMatch: '.*-ci-config$'
                         pathsExist:
-                          - base/kustomization.yaml
+                          - base/
                 - git:
                     repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}.git'
                     revision: HEAD
