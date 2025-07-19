@@ -19,7 +19,7 @@ spec:
                         secretName: github-token
                         key: token
                     filters:
-                      - repositoryMatch: '.+-{ci-config}$'
+                      - repositoryMatch: '.*-ci-config$'
                         pathsExist:
                           - base/kustomization.yaml
                 - git:
