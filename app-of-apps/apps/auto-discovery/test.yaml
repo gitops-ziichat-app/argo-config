@@ -1,7 +1,8 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: apps-auto-test
+  name: apps-auto-discovery
   namespace: argocd
 spec:
   goTemplate: true
@@ -9,28 +10,30 @@ spec:
   generators:
     - matrix:
         generators:
-          - scmProvider:
-              github:
-                organization: gitops-ziichat
-                tokenRef:
-                  secretName: github-token
-                  key: token
-              filters:
-                - repositoryMatch: 'ziichat-devops-demo-ci-config'
-                  pathsExist:
-                    - base/kustomization.yaml
-          - git:
-              repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}.git'
-              revision: HEAD
-              files:
-                - path: 'overlays/*/service-*/kustomization.yaml'
+          - matrix:
+              generators:
+                - scmProvider:
+                    github:
+                      organization: gitops-ziichat
+                      tokenRef:
+                        secretName: github-token
+                        key: token
+                    filters:
+                      - repositoryMatch: '.+-ci-config$'
+                        pathsExist:
+                          - base/kustomization.yaml
+                - git:
+                    repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}.git'
+                    revision: HEAD
+                    files:
+                      - path: 'overlays/**/kustomization.yaml'
           - clusters:
               selector:
                 matchLabels:
-                  kubernetes.io/environment: '{{ .path.segments[1] }}'
+                  kubernetes.io/environment: '{{ .path.basename }}'
   template:
     metadata:
-      name: '{{ regexReplaceAll "-deployment$" .repository "" }}-{{ .path.segments[1] }}-{{ .path.segments[2] }}'
+      name: '{{ regexReplaceAll "-ci-config$" .repository "" }}-{{ .name }}'
       labels:
         argocd.argoproj.io/type: directory
       annotations:
@@ -45,8 +48,8 @@ spec:
         notifications.argoproj.io/subscribe.on-deleted.github: ""
         github.com/ref: main
         github.com/owner: '{{ .organization }}'
-        github.com/repo: '{{ regexReplaceAll "-deployment$" .repository "" }}'
-        github.com/environment: '{{ .path.segments[1] }}'
+        github.com/repo: '{{ regexReplaceAll "-ci-config$" .repository "" }}'
+        github.com/environment: '{{ .path.basename }}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
@@ -54,15 +57,15 @@ spec:
       source:
         repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}'
         targetRevision: HEAD
-        path: 'overlays/{{ .path.segments[1] }}/{{ .path.segments[2] }}/'
+        path: 'overlays/{{ .path.basename }}/*'
       destination:
         name: '{{ .name }}'
-        namespace: '{{ .path.segments[2] }}-{{ .path.segments[1] }}'
+        namespace: '{{ regexReplaceAll "-ci-config$" .repository "" }}-{{ .path.basename }}'
       info:
         - name: 'App Repository'
-          value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-deployment$" .repository "" }}'
+          value: 'https://github.com/{{ .organization }}/{{ regexReplaceAll "-ci-config$" .repository "" }}'
         - name: 'Environment Manifests'
-          value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/{{ .path.segments[1] }}/{{ .path.segments[2] }}'
+          value: 'https://github.com/{{ .organization }}/{{ .repository }}/tree/{{ .branch }}/overlays/{{ .path.basename }}'
       syncPolicy:
         automated:
           prune: true
@@ -70,6 +73,7 @@ spec:
         managedNamespaceMetadata:
           labels:
             istio-injection: enabled
+          annotations: {}
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
