@@ -56,7 +56,7 @@ spec:
       project: apps
       source:
         repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}'
-        targetRevision: HEAD
+        targetRevision: feat
         path: 'overlays/{{ .path.basename }}/*'
       destination:
         name: '{{ .name }}'
