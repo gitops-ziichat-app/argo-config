@@ -57,7 +57,7 @@ spec:
       source:
         repoURL: 'https://github.com/{{ .organization }}/{{ .repository }}'
         targetRevision: feat
-        path: 'overlays/{{ .path.basename }}/*'
+        path: 'overlays/{{ .path.basename }}/'
       destination:
         name: '{{ .name }}'
         namespace: '{{ regexReplaceAll "-ci-config$" .repository "" }}-{{ .path.basename }}'
