@@ -22,7 +22,7 @@ spec:
     spec:
       project: addons
       source:
-        repoURL: https://github.com/gitops-ziichat/argo-config
+        repoURL: https://github.com/gitops-ziichat-app/argo-config
         targetRevision: HEAD
         path: 'app-of-apps/addons/vendor/argocd/overlays/{{ index .metadata.labels "kubernetes.io/environment" }}'
       destination:

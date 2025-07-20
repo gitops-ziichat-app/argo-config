@@ -14,7 +14,7 @@ spec:
               generators:
                 - scmProvider:
                     github:
-                      organization: gitops-ziichat
+                      organization: gitops-ziichat-app
                       tokenRef:
                         secretName: github-token
                         key: token
